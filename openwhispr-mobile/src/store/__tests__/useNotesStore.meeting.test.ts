@@ -381,6 +381,32 @@ describe('transitionStatus (guarded boundary)', () => {
   });
 });
 
+describe('saveMeetingRecording (private build: the laptop transcribes)', () => {
+  it('keeps the recording and its length on the note and leaves it recorded, not transcribing', () => {
+    (notesRepository.getTranscriptionStatus as jest.Mock).mockReturnValue('recording');
+
+    useNotesStore.getState().saveMeetingRecording(7, 'file:///app/documents/meeting-7.wav', 1421);
+
+    expect(notesRepository.updateNoteMeta).toHaveBeenCalledWith(7, {
+      sourceFile: 'file:///app/documents/meeting-7.wav',
+      audioDurationSeconds: 1421,
+    });
+    expect(notesRepository.setTranscriptionStatus).toHaveBeenCalledWith(7, 'idle');
+    expect(mockProcessMeeting).not.toHaveBeenCalled();
+  });
+
+  it('stores no length rather than zero when the length is unknown', () => {
+    (notesRepository.getTranscriptionStatus as jest.Mock).mockReturnValue('recording');
+
+    useNotesStore.getState().saveMeetingRecording(7, 'file:///app/documents/meeting-7.wav', 0);
+
+    expect(notesRepository.updateNoteMeta).toHaveBeenCalledWith(7, {
+      sourceFile: 'file:///app/documents/meeting-7.wav',
+      audioDurationSeconds: null,
+    });
+  });
+});
+
 describe('finalizeCloudMeeting', () => {
   it('generates notes without exposing an unknown speaker label', async () => {
     mockAuthState.user = signedInUser;

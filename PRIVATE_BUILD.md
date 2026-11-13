@@ -16,6 +16,10 @@ Bus Tools.
 - **Shorter setup.** Welcome → microphone → language → on-device model download →
   notifications. There's no Cloud choice, paywall, account step or tracking prompt.
 - **Every feature unlocked.** Paywall checks always let you through.
+- **The phone records, the laptop does the work.** A meeting recorded on the phone is saved
+  as it is, with no transcription on the phone and no model needed. The meeting's note
+  offers **Send to laptop** (AirDrop, or Save to Files for iCloud Drive or OneDrive), and
+  **Transcribe on this iPhone instead** as a fallback.
 - **Bus Tools style, light and dark.** Follows the phone's appearance: the Bus Tools dark
   palette or its light one (pale blue-grey page, white cards), always with the Bus Tools red
   accent and teal second accent, in Space Grotesk. The colours are in
@@ -62,7 +66,7 @@ npm run prebuild:dev -- --clean
 open ios/*.xcworkspace
 ```
 
-In Xcode, pick your team under *Signing & Capabilities* for the three targets (the app,
+In Xcode, pick your team under _Signing & Capabilities_ for the three targets (the app,
 `OpenWhisprKeyboard` and `OpenWhisprActivity`). Then plug in the iPhone and run:
 
 ```bash
@@ -70,22 +74,40 @@ npm run ios -- --device
 ```
 
 For a copy that stays installed without the Mac, archive it in Xcode
-(*Product → Archive*) and send it to TestFlight.
+(_Product → Archive_) and send it to TestFlight.
 
 ### First run
 
-1. Allow the microphone, pick your language, and let it download the speech model.
-2. Notes → **+** → **Record meeting**. The first time, it asks to download the speaker model.
+1. Allow the microphone, pick your language, and let it download the speech model. Meetings
+   don't need it; dictation and the on-phone fallback do.
+2. Notes → **+** → **Record meeting**. Give the meeting a title if you like (or pick it from
+   your calendar). The title travels to the laptop with the recording.
 3. Lock the phone if you like. Recording carries on, and the Lock Screen shows a timer and an
    End button.
-4. Press Stop. The phone writes the transcript, labels the speakers and writes the minutes.
-5. Optional: set up your voice under Notes → **Voice Profiles**, so the transcript uses your name instead of
-   "Speaker 1".
+4. Press Stop. The recording is saved on the phone (about 115 MB an hour) and the meeting's
+   note shows **Send to laptop**.
 
-Writing the minutes on the phone needs **Apple Intelligence**: an iPhone 15 Pro or later on
-iOS 26+. Without it, the transcript and speaker labels still work. For the minutes you can
-set **AI Models → note formatting** to **Custom** and point it at a model server on your own
-network (not tested on this build yet).
+## A meeting, start to finish
+
+1. **Record on the phone** as above, typing notes during the meeting if you want.
+2. **Send it to the laptop.** Open the meeting's note → **Send to laptop**:
+   - **Mac:** choose AirDrop and your Mac. It lands in Downloads.
+   - **Windows:** choose _Save to Files_ → OneDrive (or iCloud Drive), then open it from the
+     OneDrive folder on the laptop.
+
+   The file is named `<meeting title> (YYYY-MM-DD HH.MM).wav`. The recording stays on the
+   phone, so you can send it again.
+
+3. **On the laptop**, open **Upload** in the sidebar and choose the file. It transcribes
+   on the laptop, separates the speakers (on by default in this build; the first time it
+   downloads the speaker models) and saves a note named after the meeting.
+4. Open the note and choose **Generate AI Summary** for the minutes, decisions and action
+   items. With a local AI model selected, this also stays on the laptop.
+5. Rename the speakers in the transcript once ("Speaker 1" → a name); the minutes use the
+   names from then on.
+
+Notes you typed on the phone stay on the phone. To bring them across, use the note's
+**Share** menu to export them as text.
 
 ## Build the laptop app
 
@@ -107,8 +129,13 @@ npm run build:win -- --publish never --config electron-builder.unsigned-win.json
 ### First run
 
 Skip signing in. Under **Settings → AI Models**, pick **Local** for speech-to-text and for
-the AI model, and download one of each. Start a meeting note to record your mic and the
-call audio (Teams, Zoom). Afterwards, generate the AI summary for minutes and actions.
+the AI model, and download one of each. Then:
+
+- **Phone recordings:** **Upload** → choose the file (see _A meeting, start to finish_).
+- **Calls on the laptop (Teams, Zoom):** start a meeting note there instead. It records your
+  mic and the call audio directly.
+
+Either way, **Generate AI Summary** on the note writes the minutes and actions.
 
 ## Keeping up with OpenWhispr
 

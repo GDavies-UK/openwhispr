@@ -1,4 +1,5 @@
 import { useRegistryVersion } from "../../hooks/useRegistryVersion";
+import { PRIVATE_BUILD } from "../../config/privateBuildUi";
 import { useState, useRef, useEffect, useId } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -92,7 +93,11 @@ import {
   useTranscriptionContextAllowed,
 } from "../../hooks/usePolicy";
 import { byokFileSizeLimit, resolveTranscriptionRoute } from "../../helpers/transcriptionRoute";
-import { saveUploadNote, uploadTitleFallback } from "../../services/uploadNotes";
+import {
+  phoneRecordingTitle,
+  saveUploadNote,
+  uploadTitleFallback,
+} from "../../services/uploadNotes";
 import { useManagedScopeResolution } from "../../stores/enterpriseIdentityStore";
 import { isManagedTranscriptionActive } from "../../services/managedTranscription";
 import { UploadCompleteWarnings, UploadModelSettingsButton } from "./UploadAudioFeedback";
@@ -201,9 +206,12 @@ export default function UploadAudioView({ onNoteCreated, onOpenSettings }: Uploa
 
   const batch = useBatchQueue();
 
-  const [diarizationEnabled, setDiarizationEnabled] = useState(
-    () => localStorage.getItem("uploadDiarizationEnabled") === "true"
-  );
+  // On by default in the private build: phone meeting recordings arrive here and
+  // need their speakers told apart.
+  const [diarizationEnabled, setDiarizationEnabled] = useState(() => {
+    const saved = localStorage.getItem("uploadDiarizationEnabled");
+    return saved === null ? PRIVATE_BUILD : saved === "true";
+  });
   // Earlier builds accepted decimals; a saved one would read as Auto.
   const [diarizationNumSpeakers, setDiarizationNumSpeakers] = useState<string>(() => {
     const saved = localStorage.getItem("uploadDiarizationNumSpeakers") || "";
@@ -793,8 +801,11 @@ export default function UploadAudioView({ onNoteCreated, onOpenSettings }: Uploa
         setDiarizationWarning(!!res.diarizationWarning);
 
         let title: string;
+        const phoneTitle = currentFile.fromUrl ? null : phoneRecordingTitle(currentFile.name);
         if (currentFile.fromUrl) {
           title = currentFile.name;
+        } else if (phoneTitle) {
+          title = phoneTitle;
         } else {
           const aiTitle = await generateTitle(res.text);
           if (runId !== runIdRef.current) return;

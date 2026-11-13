@@ -451,6 +451,8 @@ interface NotesStore {
     expectedSpeakerCount?: number,
   ) => Promise<void>;
   retryMeetingTranscription: (noteId: number) => Promise<void>;
+  /** Private build: keep the recording on the note for the laptop to transcribe. */
+  saveMeetingRecording: (noteId: number, wavUri: string, durationSeconds: number) => void;
   finalizeCloudMeeting: (
     noteId: number,
     utterances: RealtimeUtterance[],
@@ -795,6 +797,16 @@ export const useNotesStore = create<NotesStore>((set, get) => ({
     } finally {
       get().loadNotes();
     }
+  },
+
+  saveMeetingRecording: (noteId, wavUri, durationSeconds) => {
+    notesRepository.updateNoteMeta(noteId, {
+      sourceFile: wavUri,
+      audioDurationSeconds: durationSeconds > 0 ? durationSeconds : null,
+    });
+    // recording -> idle: recorded, not transcribed. "Transcribe on this iPhone"
+    // later goes idle -> transcribing through retryMeetingTranscription.
+    get().transitionStatus(noteId, 'idle'); // loads the notes
   },
 
   retryMeetingTranscription: async (noteId) => {

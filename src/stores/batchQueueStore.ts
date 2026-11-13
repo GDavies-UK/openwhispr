@@ -8,7 +8,7 @@ import {
   transcriptionErrorKey,
   uploadRestrictionKey,
 } from "../components/notes/shared";
-import { saveUploadNote, uploadTitleFallback } from "../services/uploadNotes";
+import { phoneRecordingTitle, saveUploadNote, uploadTitleFallback } from "../services/uploadNotes";
 import { getSettings } from "./settingsStore";
 import {
   isAudioFeatureAllowed,
@@ -289,6 +289,7 @@ export function processBatchQueue(
       let noteTitle = noteName;
       if (item.source === "file") {
         noteTitle =
+          phoneRecordingTitle(noteName) ||
           (await transcribeOpts.generateTitle?.(finalText)) ||
           uploadTitleFallback(finalText, noteName);
         if (run !== runId) return;

@@ -40,6 +40,7 @@ test("batch uploads retain diarization warnings separately from transcription wa
           return { success: true, note: { id: 42 } };
         }
         export function uploadTitleFallback() { return "Uploaded note"; }
+        export function phoneRecordingTitle() { return null; }
       `,
       "/stores/settingsStore": "export function getSettings() { return {}; }",
       "/stores/policyRules":

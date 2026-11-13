@@ -56,6 +56,7 @@ const MOCKS = {
   "/services/uploadNotes": `
     export const saveUploadNote = async () => null;
     export const uploadTitleFallback = () => "";
+    export const phoneRecordingTitle = () => null;
   `,
 };
 

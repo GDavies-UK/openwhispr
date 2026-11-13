@@ -95,6 +95,7 @@ for (const phase of ["title", "save"]) {
         return "Title";
       },
       uploadTitleFallback: () => "Title",
+      phoneRecordingTitle: () => null,
       saveUploadNote: async (note) => {
         saved.push(note);
         if (phase === "save") {
