@@ -1,12 +1,8 @@
 name: Build Windows Text Monitor
 
+# Private build: OpenWhispr's automatic triggers are off in this fork, so nothing
+# here runs on its own (see PRIVATE_BUILD.md). Run it by hand from Actions if needed.
 on:
-  push:
-    paths:
-      - 'resources/windows-text-monitor.c'
-      - '.github/workflows/build-windows-text-monitor.yml'
-    branches:
-      - main
   workflow_dispatch:
     inputs:
       version:

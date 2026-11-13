@@ -1,12 +1,9 @@
 name: "CodeQL"
 
+# Private build: OpenWhispr's automatic triggers are off in this fork, so nothing
+# here runs on its own (see PRIVATE_BUILD.md). Run it by hand from Actions if needed.
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-  schedule:
-    - cron: "0 6 * * 1"
+  workflow_dispatch:
 
 permissions:
   contents: read

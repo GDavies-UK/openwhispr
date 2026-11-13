@@ -62,7 +62,7 @@ async function setup(t) {
         export function transcribeFileWithSpeakers(...args){ const f=globalThis.__enterpriseUpload; f.calls.push(args); return new Promise(resolve=>f.pending.push(resolve)); }
       `,
       "/services/uploadNotes":
-        "export const saveUploadNote=async()=>({success:true,note:{id:42}}); export const uploadTitleFallback=()=> 'Uploaded note';",
+        "export const saveUploadNote=async()=>({success:true,note:{id:42}}); export const uploadTitleFallback=()=> 'Uploaded note'; export const phoneRecordingTitle=()=>null;",
       "/utils/generateTitle": "export const generateNoteTitle=async()=>'';",
       "/utils/logger": "export default {warn(){},error(){},info(){},debug(){}};",
     },

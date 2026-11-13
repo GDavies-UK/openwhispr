@@ -115,6 +115,22 @@ export async function saveUploadNote({
   return res;
 }
 
+// The phone app names a meeting recording "<title> (YYYY-MM-DD HH.MM).wav"
+// (openwhispr-mobile/src/lib/notes/laptopHandoff.ts). Its title is the meeting's
+// own — a calendar event or what the user typed — so it beats a generated one.
+// A meeting nobody named comes over as the phone's default title, which says
+// nothing, so that one is left to the generated title.
+const PHONE_RECORDING_NAME = /^(.+) \((\d{4})-(\d{2})-(\d{2}) (\d{2})\.(\d{2})\)\.wav$/i;
+const PHONE_DEFAULT_TITLES = new Set(["untitled meeting", "meeting"]);
+
+export function phoneRecordingTitle(fileName: string): string | null {
+  const match = PHONE_RECORDING_NAME.exec(fileName.trim());
+  if (!match) return null;
+  const title = match[1].trim();
+  if (!title || PHONE_DEFAULT_TITLES.has(title.toLowerCase())) return null;
+  return title;
+}
+
 // First words of the transcript, else the file name without its extension.
 export function uploadTitleFallback(text: string, fileName: string): string {
   const words = text.trim().split(/\s+/);

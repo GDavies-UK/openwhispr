@@ -66,10 +66,9 @@ private enum Palette {
   // cancel button while cleanup runs. Fixed across appearances like accent.
   static let cleanupAccent = UIColor(red: 0.424, green: 0.314, blue: 0.914, alpha: 1.0)
 
-  // App-icon blue gradient (deep cobalt → navy, #2457D6 → #0E3690), sampled
-  // from the OpenWhispr app icon. Used for the "Activate" button.
-  static let brandGradientStart = UIColor(red: 0.141, green: 0.341, blue: 0.839, alpha: 1.0)
-  static let brandGradientEnd = UIColor(red: 0.055, green: 0.212, blue: 0.565, alpha: 1.0)
+  // Used for the "Activate" button. Bus Tools red (#e5273a) into its deep red (#a91622), as BRAND_GRADIENT in src/config/colors.ts.
+  static let brandGradientStart = UIColor(red: 0.898, green: 0.153, blue: 0.227, alpha: 1.0)
+  static let brandGradientEnd = UIColor(red: 0.663, green: 0.086, blue: 0.133, alpha: 1.0)
 }
 
 /// Apple's iOS 26 keycap type, measured at 3x on the iPhone 17 Pro: capitals and digits

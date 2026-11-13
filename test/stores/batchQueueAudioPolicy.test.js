@@ -40,7 +40,7 @@ async function setup(t) {
     mockModules: {
       "/services/fileTranscription": `export async function transcribeFileWithSpeakers(...args) { globalThis.__audioPolicyBatch.calls.push(args); return globalThis.__audioPolicyBatch.transcribe(); }`,
       "/services/managedTranscription": `export const isManagedTranscriptionActive = () => !globalThis.__audioPolicyBatch.localRoute;`,
-      "/services/uploadNotes": `export async function saveUploadNote(...args) { globalThis.__audioPolicyBatch.saved.push(args); return { success: true, note: { id: 7 } }; } export const uploadTitleFallback = () => "Audio";`,
+      "/services/uploadNotes": `export async function saveUploadNote(...args) { globalThis.__audioPolicyBatch.saved.push(args); return { success: true, note: { id: 7 } }; } export const uploadTitleFallback = () => "Audio"; export const phoneRecordingTitle = () => null;`,
       "/stores/settingsStore": `export const getSettings = () => ({});`,
     },
   });

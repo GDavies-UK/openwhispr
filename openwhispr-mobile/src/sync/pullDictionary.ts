@@ -1,5 +1,5 @@
 import { uncheckedSync, type SyncCheckpoint } from './syncContext';
-import * as Sentry from '@sentry/react-native';
+import { Sentry } from '@/lib/sentry';
 import { and, eq, isNotNull, isNull, sql } from 'drizzle-orm';
 import { db } from '@/db';
 import { dictionaryEntries } from '@/db/schema';

@@ -1,14 +1,8 @@
 name: Build and Notarize
 
+# Private build: OpenWhispr's automatic triggers are off in this fork, so nothing
+# here runs on its own (see PRIVATE_BUILD.md). Run it by hand from Actions if needed.
 on:
-  push:
-    branches: [main, develop]
-    paths-ignore:
-      - "**.md"
-      - "LICENSE"
-      - ".github/ISSUE_TEMPLATE/**"
-      - "openwhispr-mobile/**"
-  pull_request:
   workflow_dispatch:
 
 concurrency:

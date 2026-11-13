@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { PRIVATE_BUILD } from '@/config/privateBuild';
 import {
   FIRST_ONBOARDING_STEP,
   ONBOARDING_VERSION,
@@ -58,18 +59,32 @@ const BACK_DESTINATIONS: Partial<Record<OnboardingStepId, OnboardingStepId>> = {
   'voice-agent': 'dictation-email',
   tone: 'voice-agent',
   'privacy-mode': 'tone',
-  language: 'privacy-mode',
+  // The private build has no privacy-mode step to go back to.
+  ...(PRIVATE_BUILD ? {} : { language: 'privacy-mode' as const }),
   'private-download': 'language',
 };
 
+// The private build skips the keyboard demo (it dictates through a model that isn't on the
+// device yet), the Cloud/Local choice, the paywall, the account step and the tracking prompt.
+const PRIVATE_ROUTE: readonly OnboardingStepId[] = [
+  'get-started',
+  'welcome',
+  'microphone',
+  'language',
+  'private-download',
+  'notifications',
+  'graduation',
+];
+
 export function getOnboardingRoute(mode: ProcessingMode | null): OnboardingStepId[] {
+  if (PRIVATE_BUILD) return [...PRIVATE_ROUTE];
   return STEP_ORDER.filter((step) =>
     step === 'private-download' ? mode === 'private' : step !== 'paywall',
   );
 }
 
 // The optional download shares the language step's number so choosing Local doesn't grow the total.
-const COUNTED_STEPS = STEP_ORDER.filter(
+const COUNTED_STEPS = (PRIVATE_BUILD ? PRIVATE_ROUTE : STEP_ORDER).filter(
   (step) => !UNCOUNTED_STEPS.has(step) && step !== 'private-download',
 );
 

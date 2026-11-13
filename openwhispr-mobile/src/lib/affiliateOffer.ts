@@ -1,14 +1,4 @@
-import { Platform } from 'react-native';
-import Purchases from 'react-native-purchases';
-import { api } from './apiClient';
-import { getAffiliateClientConfig } from './affiliateLink';
-import { getAppStorefrontCountryCode } from './revenuecat';
-import { useConfigStore } from '@/store/useConfigStore';
-import { isUsageAnalyticsAllowed } from './usageAnalytics';
-import { getTrackingAuthorizationStatus } from './trackingTransparency';
-import { useUsageStore } from '@/store/useUsageStore';
-import { getBillingIdentity, isBillingIdentityCurrent } from './billingIdentity';
-
+// Private build: creator-code subscription offers are removed; no offer is ever loaded.
 export interface AffiliateOffer {
   campaign: string;
   productId: string;
@@ -63,64 +53,7 @@ export function validAffiliateOffer(value: unknown, country: string): value is A
   }
 }
 export async function loadAffiliateOffer(
-  isCallerCurrent: () => boolean = () => true,
+  _isCallerCurrent: () => boolean = () => true,
 ): Promise<AffiliateOffer | null> {
-  if (Platform.OS !== 'ios' || !getAffiliateClientConfig() || !isCallerCurrent()) return null;
-  const identity = getBillingIdentity();
-  if (!identity || useUsageStore.getState().usage?.isSubscribed) return null;
-  const { sessionCookie, billingUserId } = identity;
-  const current = () =>
-    isCallerCurrent() &&
-    isUsageAnalyticsAllowed(useConfigStore.getState().config) &&
-    isBillingIdentityCurrent(identity) &&
-    !useUsageStore.getState().usage?.isSubscribed;
-  let timer: ReturnType<typeof setTimeout>;
-  const controller = new AbortController();
-  const timeout = new Promise<null>((resolve) => {
-    timer = setTimeout(() => {
-      controller.abort();
-      resolve(null);
-    }, 8000);
-  });
-  const permitted = async () => {
-    const status = await getTrackingAuthorizationStatus();
-    return (
-      current() &&
-      !controller.signal.aborted &&
-      (status === 'authorized' || status === 'notSupported')
-    );
-  };
-  const work = (async () => {
-    if (!(await permitted())) return null;
-    const country = await getAppStorefrontCountryCode();
-    if (
-      !country ||
-      !current() ||
-      controller.signal.aborted ||
-      (await Purchases.getAppUserID()) !== billingUserId
-    )
-      return null;
-    if (!(await permitted())) return null;
-    const result = await api.post<{ data: unknown }>(
-      '/api/affiliate/apple-offer',
-      { country, priceTiers: true },
-      { authenticated: false, headers: { Cookie: sessionCookie }, signal: controller.signal },
-    );
-    if (!current() || controller.signal.aborted || !validAffiliateOffer(result.data, country))
-      return null;
-    const offer = result.data;
-    const products = await Purchases.getProducts([offer.productId]);
-    const product = products.find((p) => p.identifier === offer.productId);
-    if (
-      !current() ||
-      controller.signal.aborted ||
-      !product ||
-      product.currencyCode !== offer.currency ||
-      Math.abs(product.price - offer.regularPrice) > 0.000001 ||
-      product.subscriptionPeriod !== 'P1M'
-    )
-      return null;
-    return (await permitted()) && validAffiliateOffer(offer, country) ? offer : null;
-  })().catch(() => null);
-  return Promise.race([work, timeout]).finally(() => clearTimeout(timer));
+  return null;
 }

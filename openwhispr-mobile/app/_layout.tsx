@@ -25,17 +25,9 @@ import AuthScreen from '@/screens/AuthScreen';
 import { OnboardingFlow } from '@/screens/onboarding/OnboardingFlow';
 import { AnimatedSplash } from '@/components/features/AnimatedSplash';
 import { useKeyboardHandoff } from '@/hooks/useKeyboardHandoff';
-import { useRevenueCatIdentity } from '@/hooks/useRevenueCatIdentity';
-import { useAffiliateAttribution } from '@/hooks/useAffiliateAttribution';
 import { useAnonymousOnboardingSession } from '@/hooks/useAnonymousOnboardingSession';
 import { useGuestPrivateMode } from '@/hooks/useGuestPrivateMode';
 import { runMigrations } from '@/db/migrate';
-import { initSentry, Sentry } from '@/lib/sentry';
-import {
-  initAppsFlyer,
-  recheckAppsFlyerTrackingAuthorization,
-  refreshAppsFlyerTrackingAuthorization,
-} from '@/lib/appsflyer';
 import { initSyncTriggers } from '@/sync/syncEngine';
 import { PermissionAlertMount } from '@/components/ui/PermissionAlert';
 import { startKeyboardToneSync } from '@/lib/keyboardToneSync';
@@ -44,17 +36,13 @@ import { startKeyboardFullAccessProbe } from '@/lib/keyboardFullAccessProbe';
 import { OpenWhisprSuperwallProvider } from '@/components/superwall/OpenWhisprSuperwallProvider';
 import { eraseProviderCredentialsFromPreviousInstall } from '@/services/providers/ProviderCredentials';
 
-initSentry();
-initAppsFlyer();
 runMigrations();
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
 function RootLayout() {
   useKeyboardHandoff();
-  useRevenueCatIdentity();
   useAnonymousOnboardingSession();
-  useAffiliateAttribution();
   useGuestPrivateMode();
 
   const [fontsLoaded] = useFonts({
@@ -159,9 +147,8 @@ function RootLayout() {
   // Home, not wherever it was suspended (e.g. the Account screen). Cold launches
   // go through app/index.tsx; warm resume never re-resolves "/", so it needs this
   // explicit reset. Tracking an actual 'background' first keeps transient
-  // 'inactive' flickers (control center, notifications) from resetting it; those
-  // returns only re-read ATT. `resolveResumeAction`
-  // owns the guard list — flows that drive their own navigation (keyboard
+  // 'inactive' flickers (control center, notifications) from resetting it.
+  // `resolveResumeAction` owns the guard list — flows that drive their own navigation (keyboard
   // handoff, calendar auth, Stripe link-out) opt out of the reset there.
   useEffect(() => {
     let backgrounded = false;
@@ -170,20 +157,8 @@ function RootLayout() {
         backgrounded = true;
         return;
       }
-      const reportAttError = (error: unknown): void => {
-        Sentry.captureException(error);
-      };
-      if (state === 'active' && !backgrounded) {
-        // An inactive return (the StoreKit sheet, Face ID, or a paywall's own
-        // tracking prompt) re-reads ATT without the stop and pending window of a
-        // full refresh, so a purchase completing right now keeps its link.
-        recheckAppsFlyerTrackingAuthorization().catch(reportAttError);
-      }
       if (state === 'active' && backgrounded) {
         backgrounded = false;
-        // ATT can change in iOS Settings while the app is backgrounded. Reapply
-        // that system decision before allowing any further attribution events.
-        refreshAppsFlyerTrackingAuthorization().catch(reportAttError);
         const { resetToHome, refreshUsage } = resolveResumeAction(homeRouteRef.current.onHome);
         if (refreshUsage) {
           const usageStore = useUsageStore.getState();
@@ -249,4 +224,4 @@ function RootLayout() {
   );
 }
 
-export default Sentry.wrap(RootLayout);
+export default RootLayout;

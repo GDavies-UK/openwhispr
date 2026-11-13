@@ -1702,6 +1702,7 @@
       "notConfigured": "身份验证未配置",
       "notSignedIn": "未登录",
       "notSignedInDescription": "创建账户以解锁高级功能。",
+      "privateBuildDescription": "私有版本：所有内容都保留在这台电脑上，无需账户。",
       "offline": "离线",
       "offlineAccount": {
         "title": "显示上次登录时的信息",

@@ -8,6 +8,7 @@ import { iosColor, BRAND } from '@/config/colors';
 import { formatNoteRowTime } from '@/lib/formatNoteRowTime';
 import type { DateBucketKey } from '@/lib/groupNotesByDate';
 import type { Note } from '@/data';
+import { isAwaitingTranscription } from '@/lib/notes/laptopHandoff';
 
 type NoteRowProps = {
   note: Note;
@@ -30,7 +31,14 @@ export function NoteRow({
   tinted = false,
 }: NoteRowProps) {
   const title = note.title || 'Untitled';
-  const preview = (note.content || 'No additional text').replace(/\s+/g, ' ').trim();
+  const awaiting = isAwaitingTranscription(note);
+  const preview = (
+    awaiting
+      ? `Recorded · send to your laptop${note.content ? ` · ${note.content}` : ''}`
+      : note.content || 'No additional text'
+  )
+    .replace(/\s+/g, ' ')
+    .trim();
   const timeLabel = formatNoteRowTime(note.updatedAt, bucket);
 
   return (

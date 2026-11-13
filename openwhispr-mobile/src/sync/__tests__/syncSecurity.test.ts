@@ -18,10 +18,12 @@ jest.mock('@/db', () => ({
   },
 }));
 jest.mock('@/sync/syncEngine', () => ({ requestSync: jest.fn() }));
-jest.mock('@sentry/react-native', () => ({
-  addBreadcrumb: jest.fn(),
-  captureMessage: jest.fn(),
-  captureException: jest.fn(),
+jest.mock('@/lib/sentry', () => ({
+  Sentry: {
+    addBreadcrumb: jest.fn(),
+    captureMessage: jest.fn(),
+    captureException: jest.fn(),
+  },
 }));
 jest.mock('@/data/remote/notesApi', () => ({
   batchCreateNotes: jest.fn(),

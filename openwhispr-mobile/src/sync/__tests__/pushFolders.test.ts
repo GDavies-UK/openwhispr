@@ -1,7 +1,9 @@
-jest.mock('@sentry/react-native', () => ({
-  captureMessage: jest.fn(),
-  captureException: jest.fn(),
-  addBreadcrumb: jest.fn(),
+jest.mock('@/lib/sentry', () => ({
+  Sentry: {
+    captureMessage: jest.fn(),
+    captureException: jest.fn(),
+    addBreadcrumb: jest.fn(),
+  },
 }));
 jest.mock('@/data', () => ({
   notesRepository: {
@@ -30,7 +32,7 @@ jest.mock('@/data/remote/notesApi', () => ({
 import { pushFolders } from '../pushFolders';
 import { notesRepository, spacesRepository } from '@/data';
 import { batchCreateFolders, updateFolder, deleteFolder } from '@/data/remote/notesApi';
-import * as Sentry from '@sentry/react-native';
+import { Sentry } from '@/lib/sentry';
 import { FOLDER_NAME_TAKEN_CODE } from '../pushErrorCodes';
 import type { Folder } from '@/data/types';
 import type { Space } from '@/data';

@@ -1,0 +1,113 @@
+# One-button Windows installer for the private build (PRIVATE_BUILD.md).
+#
+# Actions → "Private Windows installer" → Run workflow. About 20 minutes later
+# the run's page has an artifact called "windows-installer": a zip holding
+# "OpenWhispr Setup <version>.exe". Download it, unzip it, run it on the laptop.
+#
+# The installer is not code-signed (the stock release build needs OpenWhispr's
+# own signing keys), so Windows shows "Windows protected your PC" the first
+# time: More info → Run anyway. A managed laptop may refuse unsigned software
+# altogether; that is IT's call.
+#
+# build-and-notarize.yml stays as it is: on a fork its non-PR Windows build
+# signs and fails for want of those keys. This job is the same build with the
+# unsigned config, and with no OpenWhispr cloud settings baked in, since the
+# private build never signs in.
+
+name: Private Windows installer
+
+on:
+  workflow_dispatch:
+  # "Run workflow" only appears for workflows on the default branch. Until this
+  # branch is merged, a push that changes this file runs it too.
+  push:
+    branches: [claude/adoring-cray-ljc5ha]
+    paths: [.github/workflows/private-windows-installer.yml]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: private-windows-installer-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  installer:
+    runs-on: windows-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: "npm"
+
+      # The native helpers (key listener, mic listener) are compiled with MSVC.
+      - name: Setup MSVC environment
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install platform-specific native binaries
+        run: npm install @rollup/rollup-win32-x64-msvc lightningcss-win32-x64-msvc @tailwindcss/oxide-win32-x64-msvc --no-save
+
+      - name: Cache native binaries
+        uses: actions/cache@v4
+        with:
+          path: resources/bin
+          key: windows-x64-bin-${{ hashFiles('scripts/download-*.js', 'resources/windows-system-audio-helper.c', 'resources/windows-mic-listener.c') }}
+
+      - name: Compile windows-mic-listener.exe
+        shell: cmd
+        run: |
+          if not exist resources\bin mkdir resources\bin
+          cl /O2 /nologo resources\windows-mic-listener.c /Fe:resources\bin\windows-mic-listener.exe ole32.lib oleaut32.lib
+
+      - name: Cache Electron
+        uses: actions/cache@v4
+        with:
+          path: ~/AppData/Local/electron/Cache
+          key: windows-electron-${{ hashFiles('package-lock.json') }}
+          restore-keys: windows-electron-
+
+      # Packaged with the app (electron-builder.json extraResources). Empty: the
+      # stock build writes OpenWhispr's calendar and connector client ids here,
+      # which a private build has no use for.
+      - name: Create an empty runtime env
+        shell: bash
+        run: touch .env
+
+      # build:win runs prebuild:win first, which compiles the other native
+      # helpers and downloads whisper.cpp, llama-server, sherpa-onnx, Qdrant and
+      # the speaker models into resources/bin.
+      - name: Build the unsigned installer
+        shell: bash
+        run: npm run build:win -- --publish never --config electron-builder.unsigned-win.json
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Check the installer was built
+        shell: bash
+        run: |
+          shopt -s nullglob
+          installers=(dist/*.exe)
+          if [ ${#installers[@]} -eq 0 ]; then
+            echo "::error::No installer in dist/"
+            ls -la dist || true
+            exit 1
+          fi
+          for f in "${installers[@]}"; do
+            echo "Built: $f ($(du -h "$f" | cut -f1))"
+          done
+
+      - name: Upload the installer
+        uses: actions/upload-artifact@v7
+        with:
+          name: windows-installer
+          path: dist/*.exe
+          if-no-files-found: error
+          retention-days: 14

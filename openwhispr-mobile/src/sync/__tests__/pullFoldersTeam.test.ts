@@ -1,6 +1,8 @@
-jest.mock('@sentry/react-native', () => ({
-  addBreadcrumb: jest.fn(),
-  captureMessage: jest.fn(),
+jest.mock('@/lib/sentry', () => ({
+  Sentry: {
+    addBreadcrumb: jest.fn(),
+    captureMessage: jest.fn(),
+  },
 }));
 jest.mock('@/data', () => ({
   notesRepository: {
@@ -19,7 +21,7 @@ jest.mock('@/data/remote/notesApi', () => ({
   fetchFolders: jest.fn(),
 }));
 
-import * as Sentry from '@sentry/react-native';
+import { Sentry } from '@/lib/sentry';
 import { pullFoldersTeam } from '../pullFoldersTeam';
 import { EPOCH } from '../pullNotes';
 import { notesRepository, spacesRepository } from '@/data';

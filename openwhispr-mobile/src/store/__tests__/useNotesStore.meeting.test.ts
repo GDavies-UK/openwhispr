@@ -22,8 +22,10 @@ const mockProcessingModeState: { activeMode: 'cloud' | 'private' } = {
   activeMode: 'cloud',
 };
 
-jest.mock('@sentry/react-native', () => ({
-  captureException: jest.fn(),
+jest.mock('@/lib/sentry', () => ({
+  Sentry: {
+    captureException: jest.fn(),
+  },
 }));
 jest.mock('@/data/remote/notesApi', () => ({
   deleteNote: jest.fn(),
@@ -123,7 +125,7 @@ import { generateLocalMeetingNotes } from '@/lib/notes/localMeetingNotes';
 import * as localReasoning from '@/lib/localReasoning';
 import type { Speaker } from '@/data/types';
 import { SpeakerProfileOwnerAlreadyExistsError } from '@/data/local/notesRepository';
-import * as Sentry from '@sentry/react-native';
+import { Sentry } from '@/lib/sentry';
 
 const speaker = (overrides: Partial<Speaker>): Speaker =>
   ({
@@ -376,6 +378,32 @@ describe('transitionStatus (guarded boundary)', () => {
     (notesRepository.getTranscriptionStatus as jest.Mock).mockReturnValue('idle');
     expect(() => useNotesStore.getState().transitionStatus(7, 'done')).toThrow(/Illegal/);
     expect(notesRepository.setTranscriptionStatus).not.toHaveBeenCalled();
+  });
+});
+
+describe('saveMeetingRecording (private build: the laptop transcribes)', () => {
+  it('keeps the recording and its length on the note and leaves it recorded, not transcribing', () => {
+    (notesRepository.getTranscriptionStatus as jest.Mock).mockReturnValue('recording');
+
+    useNotesStore.getState().saveMeetingRecording(7, 'file:///app/documents/meeting-7.wav', 1421);
+
+    expect(notesRepository.updateNoteMeta).toHaveBeenCalledWith(7, {
+      sourceFile: 'file:///app/documents/meeting-7.wav',
+      audioDurationSeconds: 1421,
+    });
+    expect(notesRepository.setTranscriptionStatus).toHaveBeenCalledWith(7, 'idle');
+    expect(mockProcessMeeting).not.toHaveBeenCalled();
+  });
+
+  it('stores no length rather than zero when the length is unknown', () => {
+    (notesRepository.getTranscriptionStatus as jest.Mock).mockReturnValue('recording');
+
+    useNotesStore.getState().saveMeetingRecording(7, 'file:///app/documents/meeting-7.wav', 0);
+
+    expect(notesRepository.updateNoteMeta).toHaveBeenCalledWith(7, {
+      sourceFile: 'file:///app/documents/meeting-7.wav',
+      audioDurationSeconds: null,
+    });
   });
 });
 

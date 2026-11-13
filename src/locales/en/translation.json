@@ -2234,6 +2234,7 @@
       "notConfigured": "Authentication is not configured",
       "notSignedIn": "Not signed in",
       "notSignedInDescription": "Create an account to unlock premium features.",
+      "privateBuildDescription": "Private build: everything stays on this computer. No account needed.",
       "offline": "Offline",
       "offlineAccount": {
         "title": "Showing your last sign-in",

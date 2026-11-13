@@ -7,9 +7,9 @@
     "version": "1.2.6",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
     "splash": {
-      "backgroundColor": "#007AFF"
+      "backgroundColor": "#07090f"
     },
     "ios": {
       "supportsTablet": true,
@@ -63,21 +63,12 @@
           "enableBackgroundRecording": true
         }
       ],
-      [
-        "@sentry/react-native/expo",
-        {
-          "url": "https://sentry.io/",
-          "project": "react-native",
-          "organization": "herotools-inc"
-        }
-      ],
       "expo-apple-authentication",
       "./plugins/provider-networking/withProviderNetworking",
       "./plugins/ios-cxx-standard/withIosCxxStandard",
       "./plugins/pod-deployment-target/withPodDeploymentTarget",
       "./plugins/scene-lifecycle/withSceneLifecycle",
       "./modules/background-uploader/app.plugin",
-      "./plugins/storekit/withStoreKitConfiguration",
       "./plugins/keyboard-extension/withKeyboardExtension",
       "./plugins/activity-extension/withActivityExtension",
       "./plugins/settings-bundle/withSettingsBundle",
@@ -95,16 +86,9 @@
       [
         "expo-notifications",
         {
-          "color": "#007AFF"
+          "color": "#e5273a"
         }
-      ],
-      [
-        "expo-tracking-transparency",
-        {
-          "userTrackingPermission": "Allow tracking to help us measure which ads lead to OpenWhispr installs and subscriptions. Your voice and text are never used for advertising."
-        }
-      ],
-      "react-native-appsflyer"
+      ]
     ],
     "experiments": {
       "reactCompiler": true
@@ -135,12 +119,6 @@
           }
         }
       }
-    },
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
-    "updates": {
-      "url": "https://u.expo.dev/8447d067-4553-472a-8783-554c3adc2352"
     }
   }
 }

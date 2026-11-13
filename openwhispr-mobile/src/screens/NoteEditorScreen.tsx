@@ -71,6 +71,8 @@ import { buildNoteShareContent, exportNote } from '@/lib/noteExport';
 import { AppFont } from '@/lib/fonts';
 import { makeContentHash, safeHaptics } from '@/lib/utils';
 import { isManagedMeetingAudioUri } from '@/lib/transcriptAudio';
+import { isAwaitingTranscription } from '@/lib/notes/laptopHandoff';
+import { LaptopHandoffCard } from '@/components/notes/LaptopHandoffCard';
 import { BRAND } from '@/config/colors';
 import {
   cloudModeRequiresAccount,
@@ -158,6 +160,10 @@ export default function NoteEditorScreen({
   const getNoteSegments = useNotesStore((s) => s.getNoteSegments);
   const getNoteSpeakers = useNotesStore((s) => s.getNoteSpeakers);
   const retryMeetingTranscription = useNotesStore((s) => s.retryMeetingTranscription);
+  const isDiarizerAvailable = useNotesStore((s) => s.isDiarizerAvailable);
+  const isLocalAsrModelReady = useNotesStore((s) => s.isLocalAsrModelReady);
+  const isDiarizerModelReady = useNotesStore((s) => s.isDiarizerModelReady);
+  const downloadDiarizerModel = useNotesStore((s) => s.downloadDiarizerModel);
   const renameSpeaker = useNotesStore((s) => s.renameSpeaker);
   const mergeSpeakers = useNotesStore((s) => s.mergeSpeakers);
   const confirmSpeakerSuggestion = useNotesStore((s) => s.confirmSpeakerSuggestion);
@@ -1139,6 +1145,58 @@ export default function NoteEditorScreen({
     }
   }, [isRetryingTranscript, note, retryMeetingTranscription]);
 
+  // The private build records meetings for the laptop; this runs the on-device
+  // pipeline instead, once its models are on the phone.
+  const handleTranscribeHere = useCallback(async () => {
+    if (!note || isRetryingTranscript) return;
+    if (!(await isDiarizerAvailable())) {
+      Alert.alert(
+        'Not available on this iPhone',
+        'Transcribing meetings on the phone needs a newer iPhone or iOS. Send the recording to your laptop instead.',
+      );
+      return;
+    }
+    if (!(await isLocalAsrModelReady())) {
+      Alert.alert(
+        'Speech model needed',
+        'Download a speech model in Account → AI Models → Dictation, then try again. Or send the recording to your laptop.',
+      );
+      return;
+    }
+    if (!(await isDiarizerModelReady())) {
+      Alert.alert(
+        'Speaker model needed',
+        'Telling voices apart needs a one-time download of about 100 MB.',
+        [
+          { text: 'Not now', style: 'cancel' },
+          {
+            text: 'Download and transcribe',
+            onPress: () => {
+              downloadDiarizerModel()
+                .then(() => handleRetryTranscript())
+                .catch((error: unknown) =>
+                  Alert.alert(
+                    'Download failed',
+                    error instanceof Error ? error.message : 'Try again later.',
+                  ),
+                );
+            },
+          },
+        ],
+      );
+      return;
+    }
+    await handleRetryTranscript();
+  }, [
+    downloadDiarizerModel,
+    handleRetryTranscript,
+    isDiarizerAvailable,
+    isDiarizerModelReady,
+    isLocalAsrModelReady,
+    isRetryingTranscript,
+    note,
+  ]);
+
   const handleSpeakerPress = useCallback((block: TranscriptBlock) => {
     if (block.speakerId == null) return;
     setActiveSpeakerId(block.speakerId);
@@ -1410,6 +1468,16 @@ export default function NoteEditorScreen({
 
           {isRecording && currentText ? (
             <Text className="mb-2 text-[15px] italic text-link/60">{currentText}</Text>
+          ) : null}
+
+          {note && isAwaitingTranscription(note) ? (
+            <LaptopHandoffCard
+              note={note}
+              onTranscribeHere={() => {
+                handleTranscribeHere().catch(() => undefined);
+              }}
+              transcribingHere={isRetryingTranscript}
+            />
           ) : null}
 
           <View className="relative">

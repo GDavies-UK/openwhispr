@@ -20,13 +20,14 @@ import { AppFont } from '@/lib/fonts';
 import { useKeyboardHeartbeat } from '@/hooks/useKeyboardHeartbeat';
 import { describeOnboardingError } from '@/lib/onboardingErrors';
 import { KeyboardSwitchHelpSheet } from './KeyboardSwitchHelpSheet';
+import { BRAND } from '@/config/colors';
 
 // Worklet-safe color literals — `interpolateColor` runs on the UI thread, so
 // PlatformColor / iosColor() can't be used here. These match `systemBlue` and
 // the light-mode `label` token; in dark mode the highlight still resolves to
 // brand blue + white text (the unselected row color comes from the un-animated
 // child <Text> below via Tailwind).
-const HIGHLIGHT_BG = '#007AFF';
+const HIGHLIGHT_BG = BRAND;
 const HIGHLIGHT_TEXT = '#FFFFFF';
 const UNHIGHLIGHTED_TEXT = '#000000';
 const TRANSPARENT = 'rgba(0,0,0,0)';

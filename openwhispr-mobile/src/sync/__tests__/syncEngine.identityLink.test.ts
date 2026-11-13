@@ -2,9 +2,11 @@ jest.mock('../privateNoteDeletion', () => ({
   pushPrivateNoteDeletes: jest.fn(),
   clearPrivateNoteDeletionQueue: jest.fn(),
 }));
-jest.mock('@sentry/react-native', () => ({
-  addBreadcrumb: jest.fn(),
-  captureException: jest.fn(),
+jest.mock('@/lib/sentry', () => ({
+  Sentry: {
+    addBreadcrumb: jest.fn(),
+    captureException: jest.fn(),
+  },
 }));
 
 // The real auth store pulls in better-auth, which ships ESM that jest does not

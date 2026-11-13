@@ -1,8 +1,11 @@
 const { autoUpdater } = require("electron-updater");
+const { PRIVATE_BUILD } = require("./config/privateBuild");
 
 // electron-updater can only replace an AppImage on Linux; deb, rpm and tar.gz
-// installs are updated by the package manager instead.
-const isUpdaterSupported = process.platform !== "linux" || Boolean(process.env.APPIMAGE);
+// installs are updated by the package manager instead. A private build has no
+// update feed of its own, and the official one would replace it, so it never updates.
+const isUpdaterSupported =
+  !PRIVATE_BUILD && (process.platform !== "linux" || Boolean(process.env.APPIMAGE));
 
 class UpdateManager {
   constructor() {
@@ -27,7 +30,7 @@ class UpdateManager {
   }
 
   setupAutoUpdater() {
-    if (process.env.NODE_ENV === "development") {
+    if (process.env.NODE_ENV === "development" || PRIVATE_BUILD) {
       return;
     }
 
@@ -168,7 +171,9 @@ class UpdateManager {
       if (!isUpdaterSupported) {
         return {
           updateAvailable: false,
-          message: "Updates are installed through the system package manager",
+          message: PRIVATE_BUILD
+            ? "Updates are turned off in this private build"
+            : "Updates are installed through the system package manager",
         };
       }
 
@@ -332,6 +337,7 @@ class UpdateManager {
   // Checks always run so the sidebar can offer a manual download when automatic
   // updates are off; a failed background check is logged and never surfaced.
   _autoCheckForUpdates(label) {
+    if (!isUpdaterSupported) return;
     console.log(`🔄 ${label} update check...`);
     autoUpdater.checkForUpdates().catch((err) => {
       console.error(`${label} update check failed:`, err);

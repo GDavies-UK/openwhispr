@@ -1,4 +1,5 @@
 import { useOnboardingStep } from '@/hooks/useOnboardingStep';
+import { PRIVATE_BUILD } from '@/config/privateBuild';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { View, ActivityIndicator, Pressable } from 'react-native';
 import { Text } from '@/components/ui/Text';
@@ -88,6 +89,8 @@ export function PrivateDownloadStep() {
     if (!available || !modelKey) return;
     const timer = setTimeout(() => {
       const entry = useModelDownloadStore.getState().downloads[modelKey];
+      // The slow-download sheet offers Cloud, which the private build doesn't have.
+      if (PRIVATE_BUILD) return;
       if (entry.status === 'downloading' && entry.progress < SLOW_BELOW) setSheetVisible(true);
     }, SLOW_AFTER_MS);
     return () => clearTimeout(timer);
@@ -169,8 +172,14 @@ export function PrivateDownloadStep() {
         ctaLabel={done ? 'Continue with Local Mode' : 'Continue · available when ready'}
         ctaDisabled={!done}
         onCta={() => chooseOnboardingMode('private', 'private-download')}
-        secondaryCtaLabel={done ? 'Use Cloud instead' : "Don't use Local Mode — switch to Cloud"}
-        onSecondaryCta={switchToCloudStop}
+        secondaryCtaLabel={
+          PRIVATE_BUILD
+            ? undefined
+            : done
+              ? 'Use Cloud instead'
+              : "Don't use Local Mode — switch to Cloud"
+        }
+        onSecondaryCta={PRIVATE_BUILD ? undefined : switchToCloudStop}
       >
         <View className="flex-1 pt-2">
           <View className="rounded-xl border border-separator bg-secondarySystemGroupedBackground p-4">

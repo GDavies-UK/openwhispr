@@ -31,6 +31,7 @@ import { CloudMeetingRecording } from '@/components/notes/CloudMeetingRecording'
 import { canTransition } from '@/lib/diarization/transcriptionStatus';
 import { Sentry } from '@/lib/sentry';
 import { SUPERWALL_PLACEMENTS } from '@/lib/superwall';
+import { PRIVATE_BUILD } from '@/config/privateBuild';
 import type { TranscriptionStatus } from '@/types';
 
 type Phase =
@@ -68,6 +69,7 @@ export const MeetingRecordScreen = (): React.JSX.Element => {
   const updateNote = useNotesStore((s) => s.updateNote);
   const transitionStatus = useNotesStore((s) => s.transitionStatus);
   const runMeetingPipeline = useNotesStore((s) => s.runMeetingPipeline);
+  const saveMeetingRecording = useNotesStore((s) => s.saveMeetingRecording);
   const finalizeCloudMeeting = useNotesStore((s) => s.finalizeCloudMeeting);
   const isDiarizerAvailable = useNotesStore((s) => s.isDiarizerAvailable);
   const isDiarizerModelReady = useNotesStore((s) => s.isDiarizerModelReady);
@@ -236,6 +238,11 @@ export const MeetingRecordScreen = (): React.JSX.Element => {
       startCloudMeeting(expected);
       return;
     }
+    // The private build only records here; the laptop transcribes, so no model is needed.
+    if (PRIVATE_BUILD) {
+      startRecording(expected).catch(() => setPhase('prompt'));
+      return;
+    }
     // Don't walk the user through record → transcribe only to fail: gate on platform support and a
     // downloaded speech model up front.
     if (!(await isDiarizerAvailable())) {
@@ -277,6 +284,9 @@ export const MeetingRecordScreen = (): React.JSX.Element => {
   };
 
   const finish = async (): Promise<void> => {
+    // Read before the phase change, which clears the start time.
+    const startedAt = recordingStartedAtRef.current;
+    const durationSeconds = startedAt == null ? 0 : Math.round((Date.now() - startedAt) / 1000);
     setPhase('processing');
     try {
       const uri = await recording.stopRecordingRaw();
@@ -289,7 +299,11 @@ export const MeetingRecordScreen = (): React.JSX.Element => {
       saveRawNotesNow();
       const stableUri = `${FileSystem.documentDirectory}meeting-${noteId}.wav`;
       await FileSystem.copyAsync({ from: uri, to: stableUri });
-      await runMeetingPipeline(noteId, stableUri, count);
+      if (PRIVATE_BUILD) {
+        saveMeetingRecording(noteId, stableUri, durationSeconds);
+      } else {
+        await runMeetingPipeline(noteId, stableUri, count);
+      }
       router.replace(`/(tabs)/(notes)/${noteId}`);
     } catch (error) {
       if (noteId != null) markNoteFailed(noteId);
@@ -528,12 +542,18 @@ export const MeetingRecordScreen = (): React.JSX.Element => {
       <ProcessingWaveform color={BRAND} size={48} />
       <View className="items-center gap-1.5">
         <Text className="text-lg font-semibold text-label">
-          {phase === 'downloading' ? 'Downloading model…' : 'Preparing meeting notes…'}
+          {phase === 'downloading'
+            ? 'Downloading model…'
+            : PRIVATE_BUILD
+              ? 'Saving the recording…'
+              : 'Preparing meeting notes…'}
         </Text>
         <Text className="text-[13px] text-tertiaryLabel">
           {phase === 'downloading'
             ? 'One-time ~100 MB · then fully on-device'
-            : 'Transcribing · separating voices · finalizing note'}
+            : PRIVATE_BUILD
+              ? 'Then send it to your laptop for the transcript and minutes'
+              : 'Transcribing · separating voices · finalizing note'}
         </Text>
       </View>
     </View>

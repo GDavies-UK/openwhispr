@@ -10,8 +10,10 @@
 //
 // useNotesStore pulls in a long chain of stores/services at module scope; the
 // mock set below mirrors the one proven safe by useNotesStore.spaces.test.ts.
-jest.mock('@sentry/react-native', () => ({
-  captureException: jest.fn(),
+jest.mock('@/lib/sentry', () => ({
+  Sentry: {
+    captureException: jest.fn(),
+  },
 }));
 jest.mock('@/data/remote/notesApi', () => ({
   deleteNote: jest.fn(),

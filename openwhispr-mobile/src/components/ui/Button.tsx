@@ -4,6 +4,7 @@ import { Text } from '@/components/ui/Text';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../lib/utils';
 import { GradientGlassSurface } from './GradientGlassSurface';
+import { BUS } from '@/config/colors';
 
 const buttonVariants = cva(
   'flex flex-row items-center justify-center rounded-full font-medium transition-all active:opacity-80',
@@ -102,7 +103,7 @@ export function Button({
       {loading ? (
         <ActivityIndicator
           size="small"
-          color={variant === 'outline' || variant === 'ghost' ? '#000' : '#fff'}
+          color={variant === 'outline' || variant === 'ghost' ? BUS.textHi : '#fff'}
         />
       ) : (
         <Text className={cn(textVariants({ variant, size }))}>{children}</Text>

@@ -1,8 +1,11 @@
 import Constants from 'expo-constants';
-import type { SubscriptionStatus } from 'expo-superwall';
 import type { UsageInfo } from '@/data/remote/usageApi';
 import type { ProcessingMode } from '@/types';
 import { getAffiliateClientConfig } from './affiliateLink';
+
+type SubscriptionStatus =
+  | { status: 'ACTIVE'; entitlements: { id: string; type: string }[] }
+  | { status: 'INACTIVE' | 'UNKNOWN' };
 
 export const SUPERWALL_APP_ENTITLEMENT_ID = 'pro';
 export const SUPERWALL_WORDS_REMAINING_SENTINEL = 1_000_000_000;

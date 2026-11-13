@@ -130,7 +130,11 @@ jest.mock('@/lib/permissions', () => ({
   showMicPermissionAlert: jest.fn(),
 }));
 jest.mock('@/lib/utils', () => ({ formatRelativeTime: jest.fn(), safeHaptics: jest.fn() }));
-jest.mock('@/config/colors', () => ({ BRAND: '#000000', iosColor: jest.fn(() => '#000000') }));
+jest.mock('@/config/colors', () => ({
+  ...jest.requireActual('@/config/colors'),
+  BRAND: '#000000',
+  iosColor: jest.fn(() => '#000000'),
+}));
 jest.mock('../../../modules/app-group-storage/src', () => ({
   AppGroupStorage: { getItem: jest.fn(), setItem: jest.fn() },
   APP_GROUP_KEYS: {},

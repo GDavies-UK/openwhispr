@@ -1,6 +1,5 @@
 import { createContext, useContext } from 'react';
 import type { AffiliateOffer } from '@/lib/affiliateOffer';
-import type { PaywallState } from 'expo-superwall';
 import {
   isTransactionalSuperwallPlacement,
   type SuperwallAttributes,
@@ -23,6 +22,9 @@ export type RegisterSuperwallGateOptions = {
   /** Cancels the registration when its screen is left. */
   signal?: AbortSignal;
 };
+
+// Private build: there is no paywall, so the state never leaves 'idle'.
+export type PaywallState = { status: 'idle' };
 
 type SuperwallGateContextValue = {
   register: (options: RegisterSuperwallGateOptions) => Promise<boolean>;

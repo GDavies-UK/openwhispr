@@ -1,3 +1,36 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Bus Tools palette as space-separated RGB, so classes can add opacity
+   (`bg-bus-panel/50`). Light first; the dark block follows the phone's
+   appearance. Keep in step with BUS_TOOLS / BUS_TOOLS_LIGHT in src/config/colors.ts. */
+:root {
+  --bus-bg: 244 247 251;
+  --bus-bg2: 234 239 246;
+  --bus-panel: 255 255 255;
+  --bus-panel2: 244 247 251;
+  --bus-line: 217 225 236;
+  --bus-text: 31 39 51;
+  --bus-text-hi: 31 39 51;
+  --bus-muted: 70 86 110;
+  --bus-teal: 14 116 144;
+  --bus-amber: 180 83 9;
+  --bus-green: 21 128 61;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bus-bg: 7 9 15;
+    --bus-bg2: 10 13 22;
+    --bus-panel: 18 24 34;
+    --bus-panel2: 26 33 48;
+    --bus-line: 31 38 51;
+    --bus-text: 219 226 238;
+    --bus-text-hi: 244 246 251;
+    --bus-muted: 139 148 169;
+    --bus-teal: 0 194 184;
+    --bus-amber: 255 176 0;
+    --bus-green: 45 216 130;
+  }
+}

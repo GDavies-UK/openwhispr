@@ -1,5 +1,6 @@
 import { View } from 'react-native';
 import { Text } from '@/components/ui/Text';
+import { BRAND } from '@/config/colors';
 
 interface InstructionOverlayProps {
   title?: string;
@@ -9,7 +10,7 @@ interface InstructionOverlayProps {
 const SURFACE_BG = '#1C1C1E';
 const SURFACE_BORDER = '#2C2C2E';
 const STEP_BG = 'rgba(0, 122, 255, 0.18)';
-const STEP_NUMBER = '#0A84FF';
+const STEP_NUMBER = BRAND;
 
 export function InstructionOverlay({ title, steps }: InstructionOverlayProps) {
   return (

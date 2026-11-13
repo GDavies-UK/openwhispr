@@ -1,0 +1,126 @@
+/* Bus Tools look and feel for this private build.
+
+   Loaded after index.css (src/main.jsx), so these tokens win over the stock
+   OpenWhispr ones. Values come from the Bus Tools portal's :root tokens
+   (bus-tools/index.html): a near-black navy background, Bus Tools red as the
+   accent, teal as the second accent, Space Grotesk for headings, Inter for body
+   text and IBM Plex Mono for numbers and codes. Light mode uses the Bus Tools
+   light palette (as in tool/concourse-console.html: pale blue-grey page, white
+   panels, slate text). The theme follows the system until the user picks one. */
+
+:root {
+  --font-family-sans:
+    "Inter Variable", "Noto Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-family-display: "Space Grotesk Variable", var(--font-family-sans);
+  --font-family-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-mono: var(--font-family-mono);
+
+  /* Light mode */
+  --color-background: #f4f7fb;
+  --color-foreground: #1f2733;
+  --color-card: #ffffff;
+  --color-card-foreground: #1f2733;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #1f2733;
+  --color-primary: #e5273a;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #eaeff6;
+  --color-secondary-foreground: #1f2733;
+  --color-muted: #eaeff6;
+  --color-muted-foreground: #46566e;
+  --color-accent: #0e7490;
+  --color-accent-foreground: #ffffff;
+  --color-destructive: #c81e3c;
+  --color-destructive-foreground: #ffffff;
+  --color-border: #d9e1ec;
+  --color-input: #ffffff;
+  --color-ring: #e5273a;
+  --color-link: #c81e30;
+  --color-success: #15803d;
+  --color-success-foreground: #ffffff;
+  --color-warning: #b45309;
+  --color-warning-foreground: #ffffff;
+  --color-info: #0e7490;
+  --color-info-foreground: #ffffff;
+
+  --color-surface-0: #f4f7fb;
+  --color-surface-1: #eaeff6;
+  --color-surface-2: #ffffff;
+  --color-surface-3: #f4f7fb;
+  --color-surface-raised: #eaeff6;
+  --color-surface-window: #eaeff6;
+
+  --color-border-subtle: #d9e1ec;
+  --color-border-hover: #c6d2e2;
+  --color-border-active: #e5273a;
+
+  /* Panels in Bus Tools are rounder than OpenWhispr's (--rad: 10–14px). */
+  --radius-lg: 0.625rem;
+  --radius-xl: 0.875rem;
+
+  --gradient-brand-glass: linear-gradient(180deg, #f0475a 0%, #c81e30 100%);
+  --shadow-brand-tile: var(--shadow-brand-glass), 0 10px 24px -8px rgb(229 39 58 / 0.45);
+}
+
+.dark {
+  --color-background: #07090f;
+  --color-foreground: #dbe2ee;
+  --color-card: #121822;
+  --color-card-foreground: #dbe2ee;
+  --color-popover: #161d29;
+  --color-popover-foreground: #dbe2ee;
+  --color-primary: #e5273a;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #1a2130;
+  --color-secondary-foreground: #dbe2ee;
+  --color-muted: #0e131c;
+  --color-muted-foreground: #8b94a9;
+  --color-accent: #00c2b8;
+  --color-accent-foreground: #07090f;
+  --color-destructive: #d03b3b;
+  --color-destructive-foreground: #ffffff;
+  --color-border: #1f2633;
+  --color-input: #0a0d16;
+  --color-ring: #e5273a;
+  --color-success: #2dd882;
+  --color-success-foreground: #07090f;
+  --color-warning: #ffb000;
+  --color-warning-foreground: #07090f;
+  --color-info: #7aa2ff;
+  --color-info-foreground: #07090f;
+  --color-link: #00c2b8;
+
+  --color-surface-0: #07090f;
+  --color-surface-1: #0a0d16;
+  --color-surface-2: #121822;
+  --color-surface-3: #1a2130;
+  --color-surface-raised: #212a3b;
+  --color-surface-window: #05070c;
+
+  --color-border-subtle: #1a2130;
+  --color-border-hover: #2a3345;
+  --color-border-active: #e5273a;
+
+  --shadow-selected-glow:
+    inset 0 0 0 1px rgb(229 39 58 / 0.25), 0 0 16px -4px rgb(229 39 58 / 0.25);
+  --shadow-brand-tile: var(--shadow-brand-glass), 0 10px 24px -8px rgb(0 0 0 / 0.6);
+}
+
+::selection {
+  background: rgb(229 39 58 / 0.35);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-family-display);
+  letter-spacing: -0.01em;
+}
+
+code,
+kbd,
+samp,
+pre {
+  font-family: var(--font-family-mono);
+}

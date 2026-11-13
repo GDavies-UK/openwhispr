@@ -1,7 +1,7 @@
 import { clearPrivateNoteDeletionQueue, pushPrivateNoteDeletes } from './privateNoteDeletion';
 import { createSyncContext } from './createSyncContext';
 import { SyncCancelledError, SyncStalledError, type SyncCheckpoint } from './syncContext';
-import * as Sentry from '@sentry/react-native';
+import { Sentry } from '@/lib/sentry';
 import { AppState, type AppStateStatus } from 'react-native';
 import { useAuthStore } from '@/store/useAuthStore';
 import { useConfigStore } from '@/store/useConfigStore';

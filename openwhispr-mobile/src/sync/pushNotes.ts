@@ -1,5 +1,5 @@
 import { SyncCancelledError, uncheckedSync, type SyncCheckpoint } from './syncContext';
-import * as Sentry from '@sentry/react-native';
+import { Sentry } from '@/lib/sentry';
 import { notesRepository } from '@/data';
 import {
   batchCreateNotes,

@@ -23,10 +23,12 @@ jest.mock('@/data/remote/dictionaryApi', () => ({
   updateDictionaryEntry: jest.fn(),
   deleteDictionaryEntry: jest.fn(),
 }));
-jest.mock('@sentry/react-native', () => ({
-  addBreadcrumb: jest.fn(),
-  captureMessage: jest.fn(),
-  captureException: jest.fn(),
+jest.mock('@/lib/sentry', () => ({
+  Sentry: {
+    addBreadcrumb: jest.fn(),
+    captureMessage: jest.fn(),
+    captureException: jest.fn(),
+  },
 }));
 
 import { pullDictionary } from '../pullDictionary';
@@ -38,7 +40,7 @@ import {
   updateDictionaryEntry,
 } from '@/data/remote/dictionaryApi';
 import type { RemoteDictionaryEntry } from '@/data/remote/dictionaryApi';
-import * as Sentry from '@sentry/react-native';
+import { Sentry } from '@/lib/sentry';
 import {
   DICTIONARY_CURSOR_ID_KEY,
   DICTIONARY_CURSOR_KEY,

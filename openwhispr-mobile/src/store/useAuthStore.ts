@@ -1,4 +1,5 @@
 import { create, type StoreApi } from 'zustand';
+import { PRIVATE_BUILD } from '@/config/privateBuild';
 import * as SecureStore from 'expo-secure-store';
 import {
   getStoredSession,
@@ -75,7 +76,9 @@ export const useAuthStore = create<AuthStore>((set) => ({
         const sessionCookie = await getStoredSession();
         set({ user, sessionCookie, isGuest: false, isInitialized: true, isLoading: false });
       } else {
-        const isGuest = (await SecureStore.getItemAsync(GUEST_SESSION_KEY)) === 'true';
+        // The private build has no account, so every install is a guest.
+        const isGuest =
+          PRIVATE_BUILD || (await SecureStore.getItemAsync(GUEST_SESSION_KEY)) === 'true';
         useUsageStore.getState().reset();
         set({ user: null, sessionCookie: null, isGuest, isInitialized: true, isLoading: false });
       }

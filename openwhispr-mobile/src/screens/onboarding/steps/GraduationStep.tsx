@@ -13,6 +13,7 @@ import { OnboardingShell } from '@/components/onboarding/OnboardingShell';
 import { SystemIcon, type LucideIconName } from '@/components/ui/SystemIcon';
 import { useOnboardingStore } from '@/store/useOnboardingStore';
 import { describeOnboardingError } from '@/lib/onboardingErrors';
+import { BRAND, BUS_TOOLS } from '@/config/colors';
 
 interface AppTarget {
   key: string;
@@ -53,7 +54,7 @@ const TARGETS: AppTarget[] = [
     title: isIOS ? 'Mail' : 'Gmail',
     icon: 'envelope.fill',
     mdIcon: 'Mail',
-    iconBg: '#007AFF',
+    iconBg: BRAND,
     iconAsset: isIOS
       ? require('../../../../assets/onboarding/app-icons/mail.png')
       : require('../../../../assets/onboarding/app-icons/gmail.png'),
@@ -79,7 +80,7 @@ const TARGETS: AppTarget[] = [
     title: isIOS ? 'Safari' : 'Chrome',
     icon: 'safari.fill',
     mdIcon: 'Compass',
-    iconBg: '#0A84FF',
+    iconBg: BUS_TOOLS.teal,
     iconAsset: isIOS
       ? require('../../../../assets/onboarding/app-icons/safari.png')
       : require('../../../../assets/onboarding/app-icons/chrome.png'),

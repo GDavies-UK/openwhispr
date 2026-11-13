@@ -1,6 +1,24 @@
 const { platformColor } = require('nativewind/theme');
 
-const BRAND = '#007AFF';
+// Bus Tools house style, light and dark: the values live in global.css as CSS
+// variables (and in src/config/colors.ts for code), and follow the phone's appearance.
+const v = (name) => `rgb(var(--bus-${name}) / <alpha-value>)`;
+const BUS = {
+  bg: v('bg'),
+  bg2: v('bg2'),
+  panel: v('panel'),
+  panel2: v('panel2'),
+  line: v('line'),
+  text: v('text'),
+  textHi: v('text-hi'),
+  muted: v('muted'),
+  red: '#e5273a',
+  redDeep: '#a91622',
+  teal: v('teal'),
+  amber: v('amber'),
+  green: v('green'),
+};
+const BRAND = '#e5273a';
 
 const ios = (iosName, androidFallback, web = androidFallback) =>
   platformColor(iosName, androidFallback, web);
@@ -13,61 +31,64 @@ module.exports = {
     extend: {
       colors: {
         brand: BRAND,
+        bus: BUS,
 
         label: ios('label', '#000000', '#000000'),
-        secondaryLabel: ios('secondaryLabel', '#3C3C434D', '#3C3C434D'),
+        secondaryLabel: ios('secondaryLabel', '#3C3C4399', '#3C3C4399'),
         tertiaryLabel: ios('tertiaryLabel', '#3C3C434D', '#3C3C434D'),
         quaternaryLabel: ios('quaternaryLabel', '#3C3C432E', '#3C3C432E'),
 
-        systemBackground: '#F8F6F5',
-        secondarySystemBackground: ios('secondarySystemBackground', '#F2F2F7', '#F2F2F7'),
-        secondarySystemGroupedBackground: '#FFFFFF',
+        systemBackground: BUS.bg,
+        secondarySystemBackground: BUS.bg2,
+        secondarySystemGroupedBackground: BUS.panel,
         tertiarySystemFill: ios('tertiarySystemFill', '#76768014', '#76768014'),
         quaternarySystemFill: ios('quaternarySystemFill', '#7676800F', '#7676800F'),
 
         separator: ios('separator', '#3C3C4349', '#3C3C4349'),
-        link: ios('link', BRAND, BRAND),
+        link: BRAND,
 
         systemRed: ios('systemRed', '#FF3B30', '#FF3B30'),
-        systemGreen: ios('systemGreen', '#34C759', '#34C759'),
-        systemBlue: ios('systemBlue', BRAND, BRAND),
-        systemOrange: ios('systemOrange', '#FF9500', '#FF9500'),
+        systemGreen: ios('systemGreen', '#15803d', '#15803d'),
+        systemBlue: BRAND,
+        systemOrange: ios('systemOrange', '#b45309', '#b45309'),
 
-        border: 'hsl(214.3 31.8% 91.4%)',
-        input: 'hsl(214.3 31.8% 91.4%)',
+        border: BUS.line,
+        input: BUS.line,
         ring: BRAND,
-        background: 'hsl(0 0% 100%)',
-        foreground: 'hsl(222.2 84% 4.9%)',
+        background: BUS.bg,
+        foreground: BUS.text,
         primary: {
           DEFAULT: BRAND,
-          foreground: 'hsl(210 40% 98%)',
+          foreground: '#ffffff',
         },
         secondary: {
-          DEFAULT: 'hsl(210 40% 96.1%)',
-          foreground: 'hsl(222.2 47.4% 11.2%)',
+          DEFAULT: BUS.panel2,
+          foreground: BUS.text,
         },
         destructive: {
-          DEFAULT: 'hsl(0 84.2% 60.2%)',
-          foreground: 'hsl(210 40% 98%)',
+          DEFAULT: BUS.red,
+          foreground: '#ffffff',
         },
         muted: {
-          DEFAULT: 'hsl(210 40% 96.1%)',
-          foreground: 'hsl(215.4 16.3% 46.9%)',
+          DEFAULT: BUS.panel2,
+          foreground: BUS.muted,
         },
         accent: {
-          DEFAULT: 'hsl(210 40% 96.1%)',
-          foreground: 'hsl(222.2 47.4% 11.2%)',
+          DEFAULT: BUS.teal,
+          foreground: BUS.bg,
         },
         popover: {
-          DEFAULT: 'hsl(0 0% 100%)',
-          foreground: 'hsl(222.2 84% 4.9%)',
+          DEFAULT: BUS.panel,
+          foreground: BUS.text,
         },
         card: {
-          DEFAULT: 'hsl(0 0% 100%)',
-          foreground: 'hsl(222.2 84% 4.9%)',
+          DEFAULT: BUS.panel,
+          foreground: BUS.text,
         },
       },
       borderRadius: {
+        // Bus Tools panels use a 14px radius (--rad).
+        xl: '14px',
         lg: '0.5rem',
         md: '0.375rem',
         sm: '0.25rem',

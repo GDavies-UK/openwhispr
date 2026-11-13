@@ -1,18 +1,8 @@
 name: Build Linux Text Monitor
 
+# Private build: OpenWhispr's automatic triggers are off in this fork, so nothing
+# here runs on its own (see PRIVATE_BUILD.md). Run it by hand from Actions if needed.
 on:
-  push:
-    paths:
-      - 'resources/linux-text-monitor.c'
-      - '.github/workflows/build-linux-text-monitor.yml'
-    branches:
-      - main
-  # Compile-only on PRs, so a source that doesn't build fails before merge
-  # instead of leaving the last release in place.
-  pull_request:
-    paths:
-      - 'resources/linux-text-monitor.c'
-      - '.github/workflows/build-linux-text-monitor.yml'
   workflow_dispatch:
     inputs:
       version:
