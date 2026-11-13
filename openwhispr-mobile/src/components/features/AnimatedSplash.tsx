@@ -142,7 +142,7 @@ export function AnimatedSplash({ appReady, onFinish }: AnimatedSplashProps) {
             </View>
           </View>
         </Animated.View>
-        <Animated.Text style={[styles.wordmark, textStyle]}>OpenWhispr</Animated.Text>
+        <Animated.Text style={[styles.wordmark, textStyle]}>Ding Ding</Animated.Text>
       </Animated.View>
     </Animated.View>
   );

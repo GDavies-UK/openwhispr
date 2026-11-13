@@ -527,7 +527,7 @@ export default function NoteEditorScreen({
         } else {
           Alert.alert(
             "Couldn't save your voice",
-            'Read a short script instead to teach OpenWhispr your voice.',
+            'Read a short script instead to teach Ding Ding your voice.',
           );
         }
         return false;

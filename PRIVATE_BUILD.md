@@ -1,9 +1,27 @@
-# Private build: meeting notes on your own devices
+# Ding Ding: private meeting notes on your own devices
 
 This fork builds OpenWhispr as a **private meeting note taker** for an iPhone and a laptop.
 It records meetings, writes a word-for-word transcript, labels who is speaking, and writes
 minutes with decisions and action items, all on your own devices. It is styled to match
 Bus Tools.
+
+## The name and icon
+
+Both apps are called **Ding Ding**, after the conductor's two rings to the driver: all
+aboard, safe to go. The icon is a bell push ringing on both sides, on a Bus Tools red tile.
+
+- **Artwork:** `src/assets/logo.svg` is the master. The laptop's `icon.ico`, `icon.png`,
+  `icon.icns` and Mac menu-bar `iconTemplate@3x.png`, and the phone's `assets/icon.png`,
+  `adaptive-icon.png` and `favicon.png`, are rendered from the same drawing. The in-app
+  marks (`BrandMarkIcon` on the laptop, `OpenWhisprMark` on the phone) draw it too.
+- **Laptop:** `productName` is Ding Ding, so the window, installer, shortcuts and taskbar
+  say Ding Ding. Its data folder stays `%APPDATA%\OpenWhispr`, so an install made before
+  the rename keeps its notes, settings and models.
+- **Phone:** the name under the icon defaults to Ding Ding (`OPENWHISPR_DISPLAY_NAME`
+  overrides it).
+- **Text:** the app's own name reads Ding Ding in every language. Mentions of
+  OpenWhispr's services (its Cloud, account, API, support and licence credits) still say
+  OpenWhispr, because that is who they refer to.
 
 ## What's different from stock OpenWhispr
 
@@ -53,10 +71,8 @@ bundle install
 In `.env.local`, give the app identifiers that belong to you (any reverse-domain name):
 
 ```dotenv
-OPENWHISPR_IOS_BUNDLE_IDENTIFIER=uk.co.bustools.meetings
-OPENWHISPR_SCHEME=bustools-meetings
-OPENWHISPR_DISPLAY_NAME=Meeting Notes
-OPENWHISPR_KEYBOARD_DISPLAY_NAME=Meeting Notes
+OPENWHISPR_IOS_BUNDLE_IDENTIFIER=uk.co.bustools.dingding
+OPENWHISPR_SCHEME=dingding
 ```
 
 Leave the Sentry, AppsFlyer, Superwall and RevenueCat keys empty. Nothing reads them any more.

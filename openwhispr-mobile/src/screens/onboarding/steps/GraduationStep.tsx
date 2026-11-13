@@ -212,8 +212,8 @@ export function GraduationStep() {
     <OnboardingShell
       title="Start speaking instead of typing."
       titleAccent="speaking"
-      subtitle="Try OpenWhispr anywhere — tap and hold the globe key in any app to switch keyboards."
-      ctaLabel="Start using OpenWhispr"
+      subtitle="Try Ding Ding anywhere — tap and hold the globe key in any app to switch keyboards."
+      ctaLabel="Start using Ding Ding"
       onCta={() => complete()}
       ctaLoading={busy}
     >

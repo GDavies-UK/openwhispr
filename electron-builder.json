@@ -4,7 +4,7 @@
   "extraMetadata": {
     "windowsTrayIdentity": true
   },
-  "productName": "OpenWhispr",
+  "productName": "Ding Ding",
   "protocols": {
     "name": "OpenWhispr Protocol",
     "schemes": ["openwhispr"]

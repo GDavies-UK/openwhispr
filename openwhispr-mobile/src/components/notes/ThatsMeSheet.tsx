@@ -61,7 +61,7 @@ export function ThatsMeSheet({
         <View className="flex-row items-start justify-between gap-4 px-6 pb-4 pt-8">
           <View className="flex-1">
             <Text accessibilityRole="header" className="text-[22px] font-bold text-label">
-              Teach OpenWhispr your voice
+              Teach Ding Ding your voice
             </Text>
             {claimed ? null : (
               <>

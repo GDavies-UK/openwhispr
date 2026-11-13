@@ -19,8 +19,8 @@ export const CHAT_NOTES_READ_ERROR_MESSAGE = 'Couldn’t read your notes. Try ag
 export const CHAT_EMPTY_ANSWER_MESSAGE = 'The answer came back empty. Try again.';
 export const CHAT_SESSION_EXPIRED_MESSAGE = 'Your session expired. Sign in again to keep chatting.';
 export const CHAT_RATE_LIMITED_MESSAGE = 'You’ve reached a usage limit. Try again later.';
-export const CHAT_SERVER_ERROR_MESSAGE = 'OpenWhispr couldn’t answer right now. Try again.';
-export const CHAT_REQUEST_FAILED_MESSAGE = 'OpenWhispr couldn’t take this question. Try again.';
+export const CHAT_SERVER_ERROR_MESSAGE = 'Ding Ding couldn’t answer right now. Try again.';
+export const CHAT_REQUEST_FAILED_MESSAGE = 'Ding Ding couldn’t take this question. Try again.';
 
 const ORGANIZATION_POLICY_PREFIX = 'Your organization';
 

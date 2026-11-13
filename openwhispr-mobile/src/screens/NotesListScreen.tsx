@@ -270,7 +270,7 @@ export default function NotesListScreen() {
                   <Text className="text-[16px] font-medium text-label">Voice Profiles</Text>
                   <Text className="mt-0.5 text-[13px] text-secondaryLabel">
                     {voiceProfiles.length === 0
-                      ? 'Teach OpenWhispr your voice'
+                      ? 'Teach Ding Ding your voice'
                       : `${voiceProfiles.length} ${voiceProfiles.length === 1 ? 'voice' : 'voices'}`}
                   </Text>
                 </View>

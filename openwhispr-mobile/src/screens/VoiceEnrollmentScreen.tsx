@@ -58,7 +58,7 @@ export default function VoiceEnrollmentScreen() {
       ? 'Retrain Your Voice'
       : `Retrain ${existingProfile.displayName}'s Voice`
     : isOwner
-      ? 'Teach OpenWhispr Your Voice'
+      ? 'Teach Ding Ding Your Voice'
       : "Add Someone's Voice";
 
   // A second tap on Done would go back past the screen that opened this one.

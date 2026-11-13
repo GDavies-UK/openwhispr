@@ -12,7 +12,7 @@ import { describeOnboardingError } from '@/lib/onboardingErrors';
 
 const STEPS = [
   'Tap Keyboards',
-  'Enable OpenWhispr',
+  'Enable Ding Ding',
   'Allow Full Access',
   'Tap Allow on the popup',
   'Come back into the app',
@@ -131,7 +131,7 @@ export function KeyboardIntroStep() {
       ? {
           title: 'The keyboard is already on.',
           titleAccent: 'already on',
-          subtitle: 'OpenWhispr is enabled in Settings. Continue, or walk through setup again.',
+          subtitle: 'Ding Ding is enabled in Settings. Continue, or walk through setup again.',
           ctaLabel: 'Continue',
           onCta: advance,
           secondaryCtaLabel: 'Open Settings',
@@ -149,7 +149,7 @@ export function KeyboardIntroStep() {
             onSecondaryCta: advance,
           }
         : {
-            title: 'Use OpenWhispr in any app.',
+            title: 'Use Ding Ding in any app.',
             titleAccent: 'any app',
             subtitle: 'Follow these steps in Settings. We’ll be here when you come back.',
             ctaLabel: 'Open Settings',

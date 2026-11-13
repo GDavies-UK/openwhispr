@@ -29,7 +29,7 @@ export function GetStartedStep() {
           accessibilityRole="header"
           className="text-[34px] font-bold tracking-tight text-label"
         >
-          OpenWhispr
+          Ding Ding
         </Text>
         <Text className="text-center text-[17px] leading-[23px] text-secondaryLabel">
           Your voice is 3x faster than your keyboard.

@@ -69,13 +69,13 @@ const SAMPLE_EMAIL =
 const EXAMPLE_EMAIL =
   'Hey Tim,\n\nExcited to chat. Are you free next Friday at 4pm?\n\nThanks,\nChad';
 
-// Without a live try there's no field to tap, only the sample and what OpenWhispr makes of it.
+// Without a live try there's no field to tap, only the sample and what Ding Ding makes of it.
 function expectExample(screen: ReturnType<typeof render>): void {
   expect(screen.queryByLabelText('Your dictated email')).toBeNull();
   expect(screen.queryByText('Read this aloud')).toBeNull();
   expect(screen.getByText('You say')).toBeTruthy();
   expect(screen.getByText(`“${SAMPLE_EMAIL}”`)).toBeTruthy();
-  expect(screen.getByText('OpenWhispr writes')).toBeTruthy();
+  expect(screen.getByText('Ding Ding writes')).toBeTruthy();
   expect(screen.getByText(EXAMPLE_EMAIL)).toBeTruthy();
 }
 
@@ -211,8 +211,8 @@ it.each([
   mockUser = null;
   arrange();
   const screen = render(<DictationEmailStep />);
-  act(() => mockListener({ status: 'setup_required', error: 'Open OpenWhispr to finish setup.' }));
-  expect(screen.queryByText('Open OpenWhispr to finish setup.')).toBeNull();
+  act(() => mockListener({ status: 'setup_required', error: 'Open Ding Ding to finish setup.' }));
+  expect(screen.queryByText('Open Ding Ding to finish setup.')).toBeNull();
   expect(screen.queryByText('Retry')).toBeNull();
   expectExample(screen);
   expect(mockEnsureSession).not.toHaveBeenCalled();

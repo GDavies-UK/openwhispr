@@ -210,7 +210,7 @@ function VoiceAssistantSettings({ enabled }: { enabled: boolean }): React.JSX.El
     <WorkflowSwitchCard
       title="Enable Voice Assistant"
       label="Voice Assistant"
-      description="Tap the wand on the OpenWhispr keyboard and say what to write."
+      description="Tap the wand on the Ding Ding keyboard and say what to write."
       icon="person.wave.2"
       mdIcon="UserRoundCog"
       enabled={enabled}
@@ -218,7 +218,7 @@ function VoiceAssistantSettings({ enabled }: { enabled: boolean }): React.JSX.El
         safeHaptics('light');
         void updateConfig({ dictationAgentEnabled: value });
       }}
-      offNote="The OpenWhispr keyboard shows no wand."
+      offNote="The Ding Ding keyboard shows no wand."
     >
       <SettingsRow
         iconStyle="line"

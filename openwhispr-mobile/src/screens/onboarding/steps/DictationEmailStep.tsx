@@ -110,7 +110,7 @@ export function DictationEmailStep(): ReactElement {
       onSkip={busy ? undefined : goNext}
       title="Try dictating an email"
       titleAccent="email"
-      subtitle="Don't type — just talk naturally. OpenWhispr formats it for you."
+      subtitle="Don't type — just talk naturally. Ding Ding formats it for you."
       ctaLabel="Continue"
       ctaDisabled={busy}
       onCta={goNext}
@@ -175,7 +175,7 @@ export function DictationEmailStep(): ReactElement {
               </View>
               <View>
                 <Text className="mb-2 text-[11px] font-bold uppercase tracking-wider text-tertiaryLabel">
-                  OpenWhispr writes
+                  Ding Ding writes
                 </Text>
                 <Text className="text-[16px] leading-[22px] text-label">{EXAMPLE_EMAIL}</Text>
               </View>

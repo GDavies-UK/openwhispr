@@ -44,7 +44,7 @@ function resolveOpenWhisprEnvironment() {
   );
   const displayName = firstNonEmpty(
     process.env.OPENWHISPR_DISPLAY_NAME,
-    isDevelopment ? 'OpenWhispr Dev' : 'OpenWhispr',
+    isDevelopment ? 'Ding Ding Dev' : 'Ding Ding',
   );
   const keyboardDisplayName = firstNonEmpty(
     process.env.OPENWHISPR_KEYBOARD_DISPLAY_NAME,

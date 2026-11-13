@@ -1667,7 +1667,7 @@ describe('NoteEditorScreen meta row', () => {
     });
 
     it('trusts your calendar’s own row on a team note you created', () => {
-      // Your calendar account needn't share your OpenWhispr address.
+      // Your calendar account needn't share your Ding Ding address.
       const ownCalendar = JSON.stringify([
         {
           email: 'uma@corp.example',
@@ -1846,7 +1846,7 @@ describe('NoteEditorScreen voice setup', () => {
 
     expect(alertSpy).toHaveBeenCalledWith(
       "Couldn't save your voice",
-      'Read a short script instead to teach OpenWhispr your voice.',
+      'Read a short script instead to teach Ding Ding your voice.',
     );
     expect(queryByText('Got it')).toBeNull();
     expect(getByTestId('thats-me-read-script')).toBeTruthy();
@@ -1864,7 +1864,7 @@ describe('NoteEditorScreen voice setup', () => {
     fireEvent.press(getByTestId('thats-me-10'));
 
     expect(alertSpy).toHaveBeenCalledWith(
-      "You've already taught OpenWhispr your voice",
+      "You've already taught Ding Ding your voice",
       'Open it in Voice Profiles and choose Retrain Voice.',
     );
     // Reloading picks up the profile, which hides the banner.

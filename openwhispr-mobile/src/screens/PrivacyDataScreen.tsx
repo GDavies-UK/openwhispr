@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { PRIVATE_BUILD } from '@/config/privateBuild';
 import { SettingsRow, SettingsSection } from '@/components/ui/SettingsSection';
 import { SettingsScreen } from '@/components/ui/SettingsScreen';
 import { SettingsSwitch } from '@/components/ui/SettingsSwitch';
@@ -115,17 +116,20 @@ export default function PrivacyDataScreen() {
       </SettingsSection>
 
       <SettingsSection title="Data">
-        <SettingsRow
-          iconStyle="line"
-          icon="chart.bar"
-          mdIcon="BarChart3"
-          title="Usage Analytics"
-          description="Share performance metrics and app-session analytics to help improve OpenWhispr. Apple’s Tracking permission separately limits advertising attribution on iOS. We never send transcription content."
-          rightElement={
-            <SettingsSwitch value={usageAnalytics} onValueChange={handleToggleAnalytics} />
-          }
-          showChevron={false}
-        />
+        {/* The private build has no analytics to switch on or off. */}
+        {!PRIVATE_BUILD && (
+          <SettingsRow
+            iconStyle="line"
+            icon="chart.bar"
+            mdIcon="BarChart3"
+            title="Usage Analytics"
+            description="Share performance metrics and app-session analytics to help improve OpenWhispr. Apple’s Tracking permission separately limits advertising attribution on iOS. We never send transcription content."
+            rightElement={
+              <SettingsSwitch value={usageAnalytics} onValueChange={handleToggleAnalytics} />
+            }
+            showChevron={false}
+          />
+        )}
         <SettingsRow
           iconStyle="line"
           icon="text.cursor"

@@ -102,7 +102,7 @@ export function HardwareKeyboardShortcutScreen() {
           icon="square.stack.3d.up"
           mdIcon="Layers"
           title="Open Shortcuts"
-          description="Add the “Toggle OpenWhispr Dictation” action, then tap Done."
+          description="Add the “Toggle Ding Ding Dictation” action, then tap Done."
           onPress={openShortcuts}
         />
       </SettingsSection>
@@ -121,7 +121,7 @@ export function HardwareKeyboardShortcutScreen() {
           iconStyle="line"
           icon="command"
           mdIcon="Command"
-          title="Toggle OpenWhispr Dictation"
+          title="Toggle Ding Ding Dictation"
           description={`In Full Keyboard Access, open Commands, tap this action under Shortcuts, then press ${SUGGESTED_COMBO} (Option-D).`}
           showChevron={false}
         />

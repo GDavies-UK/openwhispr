@@ -61,7 +61,7 @@ describe('VoiceEnrollmentScreen', () => {
   it('teaches your own voice by default', () => {
     mockParams = { owner: '1' };
     const { getByText } = render(<VoiceEnrollmentScreen />);
-    expect(getByText('Teach OpenWhispr Your Voice')).toBeTruthy();
+    expect(getByText('Teach Ding Ding Your Voice')).toBeTruthy();
     expect(mockRecorderProps).toMatchObject({ isOwner: true, profileId: undefined });
   });
 
@@ -161,7 +161,7 @@ describe('VoiceEnrollmentScreen', () => {
     );
     await waitFor(() =>
       expect(alertSpy).toHaveBeenCalledWith(
-        "You've already taught OpenWhispr your voice",
+        "You've already taught Ding Ding your voice",
         'Open it in Voice Profiles and choose Retrain Voice.',
       ),
     );

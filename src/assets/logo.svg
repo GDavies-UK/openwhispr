@@ -1,7 +1,5 @@
-<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="1024" height="1024" rx="241" fill="#2056DF"/>
-<circle cx="512" cy="512" r="314" fill="#2056DF" stroke="white" stroke-width="74"/>
-<path d="M512 383V641" stroke="white" stroke-width="74" stroke-linecap="round"/>
-<path d="M627 457V568" stroke="white" stroke-width="74" stroke-linecap="round"/>
-<path d="M397 457V568" stroke="white" stroke-width="74" stroke-linecap="round"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 120 120"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0475a"/><stop offset=".5" stop-color="#e5273a"/><stop offset="1" stop-color="#a91622"/></linearGradient></defs><rect width="120" height="120" rx="27" fill="url(#g)"/><rect x="38" y="28" width="44" height="64" rx="14" fill="#fff"/>
+<circle cx="60" cy="60" r="15" fill="#e5273a"/><circle cx="55" cy="55" r="4.5" fill="#fff" opacity=".45"/>
+<g fill="none" stroke="#fff" stroke-width="5.5" stroke-linecap="round">
+<path d="M28 48q-6 12 0 24M92 48q6 12 0 24"/>
+<path d="M18 40q-11 20 0 40M102 40q11 20 0 40" opacity=".55"/></g></svg>

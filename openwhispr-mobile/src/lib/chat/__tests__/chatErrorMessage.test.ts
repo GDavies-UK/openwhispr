@@ -106,10 +106,10 @@ describe('toChatErrorMessage', () => {
     const cases: [number, string][] = [
       [401, 'Your session expired. Sign in again to keep chatting.'],
       [429, 'You’ve reached a usage limit. Try again later.'],
-      [500, 'OpenWhispr couldn’t answer right now. Try again.'],
-      [503, 'OpenWhispr couldn’t answer right now. Try again.'],
-      [403, 'OpenWhispr couldn’t take this question. Try again.'],
-      [413, 'OpenWhispr couldn’t take this question. Try again.'],
+      [500, 'Ding Ding couldn’t answer right now. Try again.'],
+      [503, 'Ding Ding couldn’t answer right now. Try again.'],
+      [403, 'Ding Ding couldn’t take this question. Try again.'],
+      [413, 'Ding Ding couldn’t take this question. Try again.'],
     ];
     for (const [status, message] of cases) {
       // Shaped as apiClient's ApiError, whose module needs expo's fetch.

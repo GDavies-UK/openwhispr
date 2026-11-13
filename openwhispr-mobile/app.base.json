@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "OpenWhispr",
+    "name": "Ding Ding",
     "slug": "openwhispr-mobile",
     "scheme": "openwhispr",
     "owner": "gizmo-labs",
@@ -36,7 +36,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#e5273a"
       },
       "predictiveBackGestureEnabled": false,
       "package": "com.gizmolabs.openwhispr",

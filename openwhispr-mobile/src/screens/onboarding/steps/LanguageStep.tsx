@@ -160,7 +160,7 @@ export function LanguageStep() {
 
   const subtitle = detectedCodes.length
     ? 'We picked these from your keyboard. Add or remove based on your preference.'
-    : 'Pick the languages you want OpenWhispr to recognize.';
+    : 'Pick the languages you want Ding Ding to recognize.';
 
   return (
     <>
