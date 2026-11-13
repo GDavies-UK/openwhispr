@@ -44,10 +44,12 @@ function makeAutoUpdater({ offline = false } = {}) {
 
 // updater.js requires electron and child_process lazily (constructor, cleanup(),
 // Rosetta probe), so the mocks stay installed until afterEach.
-function createUpdateManager(autoUpdater) {
+// The upstream tests run with PRIVATE_BUILD off; the private build's own test passes true.
+function createUpdateManager(autoUpdater, { privateBuild = false } = {}) {
   delete require.cache[updaterModulePath];
   Module._load = function loadWithMocks(request, parent, isMain) {
     if (request === "electron-updater") return { autoUpdater };
+    if (request === "./config/privateBuild") return { PRIVATE_BUILD: privateBuild };
     if (request === "electron") return { autoUpdater: { on() {}, removeListener() {} } };
     if (request === "child_process") return { execSync: () => "0" };
     return originalLoad.call(this, request, parent, isMain);
@@ -236,4 +238,23 @@ test("a Linux AppImage is supported, but deb/rpm/tar.gz installs never touch the
   assert.match(result.message, /package manager/);
 
   packaged.cleanup();
+});
+
+test("a private build never checks for, downloads or installs an update", async () => {
+  process.env.NODE_ENV = "production";
+  try {
+    const autoUpdater = makeAutoUpdater();
+    const manager = createUpdateManager(autoUpdater, { privateBuild: true });
+    manager.checkForUpdatesOnStartup();
+    manager._autoCheckForUpdates("Test");
+    const result = await manager.checkForUpdates();
+    assert.equal(result.updateAvailable, false);
+    assert.match(result.message, /private build/);
+    assert.equal((await manager.getUpdateStatus()).isSupported, false);
+    assert.equal(autoUpdater.calls, 0);
+    assert.equal(autoUpdater.downloads, 0);
+    manager.cleanup?.();
+  } finally {
+    process.env.NODE_ENV = "test";
+  }
 });
