@@ -7,9 +7,9 @@
     "version": "1.2.6",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "dark",
     "splash": {
-      "backgroundColor": "#007AFF"
+      "backgroundColor": "#07090f"
     },
     "ios": {
       "supportsTablet": true,
@@ -86,7 +86,7 @@
       [
         "expo-notifications",
         {
-          "color": "#007AFF"
+          "color": "#e5273a"
         }
       ]
     ],
