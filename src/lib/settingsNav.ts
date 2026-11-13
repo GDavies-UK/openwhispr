@@ -1,3 +1,5 @@
+import { PRIVATE_BUILD } from "../config/privateBuildUi.ts";
+
 export type SettingsSectionType =
   | "account"
   | "general"
@@ -97,7 +99,8 @@ export function buildSettingsNav({
     { id: "general", group: "account" },
     { id: "toneStyle", group: "account" },
     { id: "hotkeys", group: "account" },
-    { id: "plansBilling", group: "account" },
+    // A private build offers no plans.
+    ...(PRIVATE_BUILD ? [] : [{ id: "plansBilling", group: "account" } as const]),
     ...workspace,
     { id: "speechToText", group: "aiModels" },
     { id: "llms", group: "aiModels" },

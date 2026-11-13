@@ -4,9 +4,9 @@
    OpenWhispr ones. Values come from the Bus Tools portal's :root tokens
    (bus-tools/index.html): a near-black navy background, Bus Tools red as the
    accent, teal as the second accent, Space Grotesk for headings, Inter for body
-   text and IBM Plex Mono for numbers and codes. The app opens in dark mode
-   (settingsStore's theme default); light mode keeps its surfaces and takes the
-   red accent. */
+   text and IBM Plex Mono for numbers and codes. Light mode uses the Bus Tools
+   light palette (as in tool/concourse-console.html: pale blue-grey page, white
+   panels, slate text). The theme follows the system until the user picks one. */
 
 :root {
   --font-family-sans:
@@ -16,11 +16,43 @@
   --font-family-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --font-mono: var(--font-family-mono);
 
+  /* Light mode */
+  --color-background: #f4f7fb;
+  --color-foreground: #1f2733;
+  --color-card: #ffffff;
+  --color-card-foreground: #1f2733;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #1f2733;
   --color-primary: #e5273a;
   --color-primary-foreground: #ffffff;
+  --color-secondary: #eaeff6;
+  --color-secondary-foreground: #1f2733;
+  --color-muted: #eaeff6;
+  --color-muted-foreground: #46566e;
+  --color-accent: #0e7490;
+  --color-accent-foreground: #ffffff;
+  --color-destructive: #c81e3c;
+  --color-destructive-foreground: #ffffff;
+  --color-border: #d9e1ec;
+  --color-input: #ffffff;
   --color-ring: #e5273a;
   --color-link: #c81e30;
-  --color-info: #0f8f88;
+  --color-success: #15803d;
+  --color-success-foreground: #ffffff;
+  --color-warning: #b45309;
+  --color-warning-foreground: #ffffff;
+  --color-info: #0e7490;
+  --color-info-foreground: #ffffff;
+
+  --color-surface-0: #f4f7fb;
+  --color-surface-1: #eaeff6;
+  --color-surface-2: #ffffff;
+  --color-surface-3: #f4f7fb;
+  --color-surface-raised: #eaeff6;
+  --color-surface-window: #eaeff6;
+
+  --color-border-subtle: #d9e1ec;
+  --color-border-hover: #c6d2e2;
   --color-border-active: #e5273a;
 
   /* Panels in Bus Tools are rounder than OpenWhispr's (--rad: 10–14px). */

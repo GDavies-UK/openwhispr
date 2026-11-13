@@ -1,4 +1,5 @@
 import type { ProviderStore, StoreBilling } from "./usageStore.ts";
+import { PRIVATE_BUILD } from "../config/privateBuildUi.ts";
 
 export type UpsellDecision = "show" | "hide" | "unknown";
 
@@ -16,6 +17,8 @@ export function decideUpsell({
   hasPaidAccess,
   isPastDue,
 }: UpsellInput): UpsellDecision {
+  // A private build offers no plans.
+  if (PRIVATE_BUILD) return "hide";
   if (!authLoaded) return "unknown";
   // Signed out there is no usage response to await; the upsell is the point.
   if (!isSignedIn) return "show";

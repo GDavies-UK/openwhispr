@@ -1681,6 +1681,7 @@
       "notConfigured": "A autenticação não está configurada",
       "notSignedIn": "Não conectado",
       "notSignedInDescription": "Crie uma conta para desbloquear recursos premium.",
+      "privateBuildDescription": "Versão privada: tudo fica neste computador. Não é necessária uma conta.",
       "offline": "Offline",
       "offlineAccount": {
         "title": "Mostrando seu último login",

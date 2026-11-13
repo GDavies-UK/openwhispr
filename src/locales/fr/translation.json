@@ -2234,6 +2234,7 @@
       "notConfigured": "L'authentification n'est pas configurée",
       "notSignedIn": "Non connecté",
       "notSignedInDescription": "Créez un compte pour débloquer les fonctionnalités premium.",
+      "privateBuildDescription": "Version privée : tout reste sur cet ordinateur. Aucun compte n'est nécessaire.",
       "offline": "Hors ligne",
       "offlineAccount": {
         "title": "Affichage de votre dernière connexion",

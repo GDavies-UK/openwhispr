@@ -1702,6 +1702,7 @@
       "notConfigured": "尚未設定驗證功能",
       "notSignedIn": "尚未登入",
       "notSignedInDescription": "建立帳號以解鎖進階功能。",
+      "privateBuildDescription": "私有版本：所有內容都保留在這台電腦上，無需帳戶。",
       "offline": "離線",
       "offlineAccount": {
         "title": "顯示上次登入時的資訊",

@@ -1754,6 +1754,7 @@
       "notConfigured": "La autenticación no está configurada",
       "notSignedIn": "Sin sesión iniciada",
       "notSignedInDescription": "Crea una cuenta para desbloquear funciones premium.",
+      "privateBuildDescription": "Versión privada: todo se queda en este ordenador. No necesitas una cuenta.",
       "offline": "Sin conexión",
       "offlineAccount": {
         "title": "Se muestra tu último inicio de sesión",

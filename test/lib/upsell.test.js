@@ -1,3 +1,6 @@
+// These cover stock OpenWhispr; the private build has its own test (privateBuildUi.test.js).
+globalThis.__OPENWHISPR_STOCK_UI__ = true;
+
 const test = require("node:test");
 const assert = require("node:assert/strict");
 

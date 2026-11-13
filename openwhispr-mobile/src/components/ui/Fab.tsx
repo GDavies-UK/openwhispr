@@ -15,7 +15,7 @@ import { GradientGlassSurface } from '@/components/ui/GradientGlassSurface';
 import { Glass } from '@/components/ui/Glass';
 import { TAB_BAR_CLEARANCE } from '@/components/ui/tabBarClearance';
 import { safeHaptics } from '@/lib/utils';
-import { BRAND, BUS_TOOLS } from '@/config/colors';
+import { BRAND, BUS } from '@/config/colors';
 
 const SIZE = 56;
 const MINI_SIZE = 44;
@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     height: MINI_SIZE,
     borderRadius: MINI_SIZE / 2,
-    backgroundColor: 'rgba(26,33,48,0.94)',
+    backgroundColor: BUS.frostStrong,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.18,
@@ -266,19 +266,19 @@ const styles = StyleSheet.create({
   miniActionBase: {
     ...StyleSheet.absoluteFillObject,
     borderRadius: MINI_SIZE / 2,
-    backgroundColor: 'rgba(26,33,48,0.94)',
+    backgroundColor: BUS.frostStrong,
   },
   miniActionGlass: {
     height: MINI_SIZE,
     borderRadius: MINI_SIZE / 2,
-    backgroundColor: 'rgba(26,33,48,0.42)',
+    backgroundColor: BUS.frostClear,
     overflow: 'hidden',
   },
   miniActionHighlight: {
     ...StyleSheet.absoluteFillObject,
     borderRadius: MINI_SIZE / 2,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: BUS_TOOLS.line,
+    borderColor: BUS.line,
   },
   miniActionContent: {
     height: MINI_SIZE,

@@ -4651,6 +4651,7 @@
       "notConfigured": "لم يتم تكوين المصادقة",
       "notSignedIn": "لم يتم تسجيل الدخول",
       "notSignedInDescription": "أنشئ حسابًا للوصول إلى الميزات المميزة.",
+      "privateBuildDescription": "نسخة خاصة: يبقى كل شيء على هذا الكمبيوتر. لا حاجة إلى حساب.",
       "offline": "غير متصل بالإنترنت",
       "offlineAccount": {
         "title": "يتم عرض آخر تسجيل دخول",

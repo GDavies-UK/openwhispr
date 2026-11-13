@@ -1702,6 +1702,7 @@
       "notConfigured": "L'autenticazione non è configurata",
       "notSignedIn": "Non hai effettuato l'accesso",
       "notSignedInDescription": "Crea un account per sbloccare le funzionalità premium.",
+      "privateBuildDescription": "Versione privata: tutto resta su questo computer. Non serve un account.",
       "offline": "Offline",
       "offlineAccount": {
         "title": "Dati dell'ultimo accesso",

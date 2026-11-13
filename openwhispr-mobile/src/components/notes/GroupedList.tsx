@@ -6,7 +6,7 @@ import {
   NOTES_ROW_PADDING_X,
   NOTES_ROW_PADDING_Y,
 } from './tokens';
-import { BUS_TOOLS } from '@/config/colors';
+import { BUS } from '@/config/colors';
 
 type GroupedListProps = {
   radius?: number;
@@ -109,7 +109,7 @@ GroupedList.Row = Row;
 
 const styles = StyleSheet.create({
   opaqueBackground: {
-    backgroundColor: BUS_TOOLS.panel,
+    backgroundColor: BUS.panel,
   },
   shadow: {
     boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.10)',

@@ -1,4 +1,5 @@
 import { EnterpriseAudioSettings } from "./settings/EnterpriseAudioSettings";
+import { PRIVATE_BUILD } from "../config/privateBuildUi";
 import { useRegistryVersion } from "../hooks/useRegistryVersion";
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
@@ -2302,34 +2303,40 @@ export default function SettingsPage({
                   <SettingsPanelRow>
                     <SettingsRow
                       label={t("settingsPage.account.notSignedIn")}
-                      description={t("settingsPage.account.notSignedInDescription")}
+                      description={
+                        PRIVATE_BUILD
+                          ? t("settingsPage.account.privateBuildDescription")
+                          : t("settingsPage.account.notSignedInDescription")
+                      }
                     >
                       <Badge variant="outline">{t("settingsPage.account.offline")}</Badge>
                     </SettingsRow>
                   </SettingsPanelRow>
                 </SettingsPanel>
 
-                <div className="rounded-lg border border-primary/20 dark:border-primary/15 bg-primary/3 dark:bg-primary/6 p-4">
-                  <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-md bg-primary/10 dark:bg-primary/15 flex items-center justify-center shrink-0 mt-0.5">
-                      <Sparkles className="w-4 h-4 text-primary" />
-                    </div>
-                    <div className="min-w-0 flex-1 space-y-2.5">
-                      <div>
-                        <p className="text-xs font-medium text-foreground">
-                          {t("settingsPage.account.trialCta.title")}
-                        </p>
-                        <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">
-                          {t("settingsPage.account.trialCta.description")}
-                        </p>
+                {!PRIVATE_BUILD && (
+                  <div className="rounded-lg border border-primary/20 dark:border-primary/15 bg-primary/3 dark:bg-primary/6 p-4">
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 rounded-md bg-primary/10 dark:bg-primary/15 flex items-center justify-center shrink-0 mt-0.5">
+                        <Sparkles className="w-4 h-4 text-primary" />
                       </div>
-                      <Button onClick={requestSignIn} size="sm" className="w-full">
-                        <UserCircle className="me-1.5 h-3.5 w-3.5" />
-                        {t("settingsPage.account.trialCta.button")}
-                      </Button>
+                      <div className="min-w-0 flex-1 space-y-2.5">
+                        <div>
+                          <p className="text-xs font-medium text-foreground">
+                            {t("settingsPage.account.trialCta.title")}
+                          </p>
+                          <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">
+                            {t("settingsPage.account.trialCta.description")}
+                          </p>
+                        </div>
+                        <Button onClick={requestSignIn} size="sm" className="w-full">
+                          <UserCircle className="me-1.5 h-3.5 w-3.5" />
+                          {t("settingsPage.account.trialCta.button")}
+                        </Button>
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
               </>
             ) : (
               <>

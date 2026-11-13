@@ -1810,10 +1810,9 @@ export const useSettingsStore = create<SettingsState>()((set, get) => ({
   micWarmHoldSeconds: snapMicWarmHold(readNumber("micWarmHoldSeconds", 0)),
 
   theme: (() => {
-    // Private build: opens in the Bus Tools dark theme (src/styles/busTools.css).
-    const v = readString("theme", "dark");
+    const v = readString("theme", "auto");
     if (v === "light" || v === "dark" || v === "auto") return v;
-    return "dark" as const;
+    return "auto" as const;
   })(),
   cloudBackupEnabled: readBoolean("cloudBackupEnabled", false),
   insightsSyncEnabled: readBoolean("insightsSyncEnabled", false),

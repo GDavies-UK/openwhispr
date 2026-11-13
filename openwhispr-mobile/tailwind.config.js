@@ -1,22 +1,24 @@
 const { platformColor } = require('nativewind/theme');
 
-// Bus Tools house style — keep in step with BUS_TOOLS in src/config/colors.ts.
+// Bus Tools house style, light and dark: the values live in global.css as CSS
+// variables (and in src/config/colors.ts for code), and follow the phone's appearance.
+const v = (name) => `rgb(var(--bus-${name}) / <alpha-value>)`;
 const BUS = {
-  bg: '#07090f',
-  bg2: '#0a0d16',
-  panel: '#121822',
-  panel2: '#1a2130',
-  line: 'rgba(255,255,255,0.08)',
-  text: '#dbe2ee',
-  textHi: '#f4f6fb',
-  muted: '#8b94a9',
+  bg: v('bg'),
+  bg2: v('bg2'),
+  panel: v('panel'),
+  panel2: v('panel2'),
+  line: v('line'),
+  text: v('text'),
+  textHi: v('text-hi'),
+  muted: v('muted'),
   red: '#e5273a',
   redDeep: '#a91622',
-  teal: '#00c2b8',
-  amber: '#ffb000',
-  green: '#2dd882',
+  teal: v('teal'),
+  amber: v('amber'),
+  green: v('green'),
 };
-const BRAND = BUS.red;
+const BRAND = '#e5273a';
 
 const ios = (iosName, androidFallback, web = androidFallback) =>
   platformColor(iosName, androidFallback, web);
@@ -31,24 +33,24 @@ module.exports = {
         brand: BRAND,
         bus: BUS,
 
-        label: ios('label', BUS.textHi, BUS.textHi),
-        secondaryLabel: ios('secondaryLabel', '#EBEBF599', '#EBEBF599'),
-        tertiaryLabel: ios('tertiaryLabel', '#EBEBF54D', '#EBEBF54D'),
-        quaternaryLabel: ios('quaternaryLabel', '#EBEBF52E', '#EBEBF52E'),
+        label: ios('label', '#000000', '#000000'),
+        secondaryLabel: ios('secondaryLabel', '#3C3C4399', '#3C3C4399'),
+        tertiaryLabel: ios('tertiaryLabel', '#3C3C434D', '#3C3C434D'),
+        quaternaryLabel: ios('quaternaryLabel', '#3C3C432E', '#3C3C432E'),
 
         systemBackground: BUS.bg,
         secondarySystemBackground: BUS.bg2,
         secondarySystemGroupedBackground: BUS.panel,
-        tertiarySystemFill: ios('tertiarySystemFill', '#7676803D', '#7676803D'),
-        quaternarySystemFill: ios('quaternarySystemFill', '#7676802E', '#7676802E'),
+        tertiarySystemFill: ios('tertiarySystemFill', '#76768014', '#76768014'),
+        quaternarySystemFill: ios('quaternarySystemFill', '#7676800F', '#7676800F'),
 
-        separator: ios('separator', '#54545899', '#54545899'),
+        separator: ios('separator', '#3C3C4349', '#3C3C4349'),
         link: BRAND,
 
         systemRed: ios('systemRed', '#FF3B30', '#FF3B30'),
-        systemGreen: ios('systemGreen', BUS.green, BUS.green),
+        systemGreen: ios('systemGreen', '#15803d', '#15803d'),
         systemBlue: BRAND,
-        systemOrange: ios('systemOrange', BUS.amber, BUS.amber),
+        systemOrange: ios('systemOrange', '#b45309', '#b45309'),
 
         border: BUS.line,
         input: BUS.line,
@@ -57,7 +59,7 @@ module.exports = {
         foreground: BUS.text,
         primary: {
           DEFAULT: BRAND,
-          foreground: BUS.textHi,
+          foreground: '#ffffff',
         },
         secondary: {
           DEFAULT: BUS.panel2,
@@ -65,7 +67,7 @@ module.exports = {
         },
         destructive: {
           DEFAULT: BUS.red,
-          foreground: BUS.textHi,
+          foreground: '#ffffff',
         },
         muted: {
           DEFAULT: BUS.panel2,

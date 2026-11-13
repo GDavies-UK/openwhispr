@@ -33,7 +33,7 @@ import { getPreferredTranscriptionLanguage } from '@/lib/transcriptionLanguage';
 import { accountRequiredForCloud, showAccountRequiredAlert } from '@/lib/accountAccess';
 import { isMicPermissionError, isNoSpeechError, showMicPermissionAlert } from '@/lib/permissions';
 import { formatRelativeTime, safeHaptics } from '@/lib/utils';
-import { BRAND, BUS_TOOLS, iosColor } from '@/config/colors';
+import { BRAND, BUS, iosColor } from '@/config/colors';
 import { ProcessingWaveform } from '@/components/features/WaveformVisualizer';
 import { AppGroupStorage, APP_GROUP_KEYS } from '../../modules/app-group-storage/src';
 import { TranscriptModal } from '@/components/features/TranscriptModal';
@@ -812,9 +812,9 @@ const styles = StyleSheet.create({
     borderCurve: 'continuous',
     // Fallback fill: liquid glass is clear over a flat background, so without
     // this the pill would have no visible backing. Glass renders on top of it.
-    backgroundColor: 'rgba(18,24,34,0.92)',
+    backgroundColor: BUS.frost,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: BUS_TOOLS.line,
+    borderColor: BUS.line,
     boxShadow: '0px 6px 20px rgba(0,0,0,0.14)',
     zIndex: 300,
   },

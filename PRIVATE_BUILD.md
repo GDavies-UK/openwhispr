@@ -16,9 +16,10 @@ Bus Tools.
 - **Shorter setup.** Welcome → microphone → language → on-device model download →
   notifications. There's no Cloud choice, paywall, account step or tracking prompt.
 - **Every feature unlocked.** Paywall checks always let you through.
-- **Bus Tools style.** Dark appearance, Bus Tools red accent, teal second accent, Space
-  Grotesk type. The colours are in `src/config/colors.ts` (`BUS_TOOLS`) and
-  `tailwind.config.js`.
+- **Bus Tools style, light and dark.** Follows the phone's appearance: the Bus Tools dark
+  palette or its light one (pale blue-grey page, white cards), always with the Bus Tools red
+  accent and teal second accent, in Space Grotesk. The colours are in
+  `src/config/colors.ts` (`BUS_TOOLS`, `BUS_TOOLS_LIGHT`) and `global.css`.
 
 The switch is `PRIVATE_BUILD` in `openwhispr-mobile/src/config/privateBuild.ts`.
 
@@ -26,8 +27,11 @@ The switch is `PRIVATE_BUILD` in `openwhispr-mobile/src/config/privateBuild.ts`.
 
 - **No auto-updates.** The stock updater installs official OpenWhispr releases, which would
   replace this build. Turned off with `PRIVATE_BUILD` in `src/config/privateBuild.js`.
-- **Bus Tools style.** `src/styles/busTools.css` loads after the stock theme: dark by default,
-  Bus Tools red and teal, Space Grotesk headings, Inter body text, IBM Plex Mono for code.
+- **No plans or upgrade prompts.** The "Upgrade to Pro" card, the free-trial card and the
+  Plan & Billing section are hidden (`PRIVATE_BUILD` in `src/config/privateBuildUi.ts`).
+- **Bus Tools style, light and dark.** `src/styles/busTools.css` loads after the stock theme.
+  It follows the computer's appearance until you pick Light or Dark in Settings. Bus Tools red
+  and teal, Space Grotesk headings, Inter body text, IBM Plex Mono for code.
 - Telemetry was already off by default. Don't sign in, and nothing goes to OpenWhispr's servers.
 
 ## Install on your iPhone

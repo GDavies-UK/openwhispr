@@ -1702,6 +1702,7 @@
       "notConfigured": "認証が設定されていません",
       "notSignedIn": "サインインしていません",
       "notSignedInDescription": "アカウントを作成してプレミアム機能をアンロックしましょう。",
+      "privateBuildDescription": "プライベートビルド：すべてこのコンピューター内に保存されます。アカウントは不要です。",
       "offline": "オフライン",
       "offlineAccount": {
         "title": "前回サインイン時の情報を表示中",
