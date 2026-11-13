@@ -1,3 +1,6 @@
+// These cover stock OpenWhispr; the private build has its own tests (privateBuildUi.test.js).
+globalThis.__OPENWHISPR_STOCK_UI__ = true;
+
 const assert = require("node:assert/strict");
 const { readFileSync } = require("node:fs");
 const test = require("node:test");
