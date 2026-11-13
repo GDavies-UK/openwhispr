@@ -111,6 +111,20 @@ Notes you typed on the phone stay on the phone. To bring them across, use the no
 
 ## Build the laptop app
 
+### Windows: the one-button installer (no tools needed)
+
+On GitHub, open your fork → **Actions** → **Private Windows installer** → **Run workflow**.
+After about 20 minutes, the run's page has a **windows-installer** download: a zip holding
+`OpenWhispr Setup <version>.exe`. Unzip it and run it on the laptop.
+
+- The installer isn't code-signed, so Windows shows "Windows protected your PC" the first
+  time: **More info** → **Run anyway**. A work-managed laptop may block it; ask IT.
+- If **Actions** shows a notice about workflows on forks, enable them first.
+- **Run workflow** only appears once this branch is merged into the fork's default branch.
+  Until then, the workflow runs whenever its own file changes on this branch.
+
+### Building it yourself
+
 Use Node 24 (`.nvmrc`).
 
 ```bash
