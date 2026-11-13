@@ -1,9 +1,9 @@
 name: Mobile CI
 
+# Private build: OpenWhispr's automatic triggers are off in this fork, so nothing
+# here runs on its own (see PRIVATE_BUILD.md). Run it by hand from Actions if needed.
 on:
-  pull_request:
-  push:
-    branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read

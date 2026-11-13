@@ -151,6 +151,15 @@ the AI model, and download one of each. Then:
 
 Either way, **Generate AI Summary** on the note writes the minutes and actions.
 
+## GitHub Actions in this fork
+
+OpenWhispr's own workflows (its signed release build, helper-binary builds, code scanning,
+phone checks and AI canaries) no longer run on their own: a push to `main` or a pull request
+would otherwise start release builds that fail without OpenWhispr's signing keys and use up
+Actions minutes. Each can still be run by hand from **Actions**. Left as they were: the
+version-tag release workflow, the two packaging jobs that run when a GitHub release is
+published, and the lockfile check on pull requests.
+
 ## Keeping up with OpenWhispr
 
 Each change is behind a `PRIVATE_BUILD` check or in its own file (`busTools.css`, the

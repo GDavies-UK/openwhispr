@@ -5,9 +5,9 @@
 # regressions. Same pattern as llm-canary.yml.
 name: stt-canary
 
+# Private build: OpenWhispr's automatic triggers are off in this fork, so nothing
+# here runs on its own (see PRIVATE_BUILD.md). Run it by hand from Actions if needed.
 on:
-  schedule:
-    - cron: "30 6 * * 1" # Mondays 06:30 UTC
   workflow_dispatch:
 
 permissions:
