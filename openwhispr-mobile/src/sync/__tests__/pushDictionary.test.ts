@@ -34,9 +34,11 @@ jest.mock('@/db', () => ({
     return mockDb;
   },
 }));
-jest.mock('@sentry/react-native', () => ({
-  captureMessage: jest.fn(),
-  captureException: jest.fn(),
+jest.mock('@/lib/sentry', () => ({
+  Sentry: {
+    captureMessage: jest.fn(),
+    captureException: jest.fn(),
+  },
 }));
 jest.mock('@/data/remote/dictionaryApi', () => ({
   batchCreateDictionary: jest.fn(),
@@ -50,7 +52,7 @@ import {
   updateDictionaryEntry,
   deleteDictionaryEntry,
 } from '@/data/remote/dictionaryApi';
-import * as Sentry from '@sentry/react-native';
+import { Sentry } from '@/lib/sentry';
 
 const mockBatchCreate = batchCreateDictionary as jest.Mock;
 const mockUpdate = updateDictionaryEntry as jest.Mock;

@@ -30,9 +30,11 @@ jest.mock('@/db', () => ({
     return mockDb;
   },
 }));
-jest.mock('@sentry/react-native', () => ({
-  captureMessage: jest.fn(),
-  captureException: jest.fn(),
+jest.mock('@/lib/sentry', () => ({
+  Sentry: {
+    captureMessage: jest.fn(),
+    captureException: jest.fn(),
+  },
 }));
 jest.mock('@/data/remote/snippetsApi', () => ({
   batchCreateSnippets: jest.fn(),
@@ -43,7 +45,7 @@ jest.mock('@/data/remote/snippetsApi', () => ({
 import { pushSnippets } from '../pushSnippets';
 import { SyncCancelledError } from '../syncContext';
 import { batchCreateSnippets, updateSnippet, deleteSnippet } from '@/data/remote/snippetsApi';
-import * as Sentry from '@sentry/react-native';
+import { Sentry } from '@/lib/sentry';
 
 const mockBatchCreate = batchCreateSnippets as jest.Mock;
 const mockUpdate = updateSnippet as jest.Mock;

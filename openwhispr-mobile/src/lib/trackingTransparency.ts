@@ -1,33 +1,15 @@
-import { Platform } from 'react-native';
-import {
-  getTrackingPermissionsAsync,
-  isAvailable,
-  requestTrackingPermissionsAsync,
-  type PermissionResponse,
-} from 'expo-tracking-transparency';
-
+// Private build: no advertising identifier is ever requested, so App Tracking
+// Transparency is never asked for.
 export type TrackingAuthorizationStatus =
   | 'authorized'
   | 'denied'
   | 'notDetermined'
   | 'notSupported';
 
-function mapPermissionStatus(
-  status: PermissionResponse['status'],
-): Exclude<TrackingAuthorizationStatus, 'notSupported'> {
-  if (status === 'granted') return 'authorized';
-  if (status === 'denied') return 'denied';
-  return 'notDetermined';
-}
-
 export async function getTrackingAuthorizationStatus(): Promise<TrackingAuthorizationStatus> {
-  if (Platform.OS !== 'ios' || !isAvailable()) return 'notSupported';
-  const response = await getTrackingPermissionsAsync();
-  return mapPermissionStatus(response.status);
+  return 'notSupported';
 }
 
 export async function requestTrackingAuthorization(): Promise<TrackingAuthorizationStatus> {
-  if (Platform.OS !== 'ios' || !isAvailable()) return 'notSupported';
-  const response = await requestTrackingPermissionsAsync();
-  return mapPermissionStatus(response.status);
+  return 'notSupported';
 }

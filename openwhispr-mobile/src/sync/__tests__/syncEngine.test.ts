@@ -6,10 +6,12 @@ jest.mock('../privateNoteDeletion', () => ({
 // Every dependency is mocked so this file can exercise runSyncNow's gating
 // and error-handling logic (in particular the new policyBlocked state) in
 // isolation, without touching SQLite, expo/fetch, or better-auth.
-jest.mock('@sentry/react-native', () => ({
-  captureException: jest.fn(),
-  addBreadcrumb: jest.fn(),
-  captureMessage: jest.fn(),
+jest.mock('@/lib/sentry', () => ({
+  Sentry: {
+    captureException: jest.fn(),
+    addBreadcrumb: jest.fn(),
+    captureMessage: jest.fn(),
+  },
 }));
 
 jest.mock('@/lib/apiClient', () => {
@@ -150,7 +152,7 @@ import { useSyncStore } from '../useSyncStore';
 import { ApiError } from '@/lib/apiClient';
 import { SyncStalledError } from '../syncContext';
 import { notesRepository } from '@/data';
-import * as Sentry from '@sentry/react-native';
+import { Sentry } from '@/lib/sentry';
 
 // Flushes the microtask queue (via a macrotask boundary) enough times to
 // drain runSyncNow's long await chain — requestSync doesn't return the

@@ -12,9 +12,11 @@ jest.mock('@/db', () => ({
     return mockDatabase;
   },
 }));
-jest.mock('@sentry/react-native', () => ({
-  captureMessage: jest.fn(),
-  captureException: jest.fn(),
+jest.mock('@/lib/sentry', () => ({
+  Sentry: {
+    captureMessage: jest.fn(),
+    captureException: jest.fn(),
+  },
 }));
 jest.mock('@/data/remote/dictionaryApi', () => ({
   batchCreateDictionary: jest.fn(),

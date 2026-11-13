@@ -1,3 +1,5 @@
+// These cover the upstream flow (Cloud, account, paywall); the private build's route has its own test.
+jest.mock('@/config/privateBuild', () => ({ PRIVATE_BUILD: false }));
 import type React from 'react';
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 

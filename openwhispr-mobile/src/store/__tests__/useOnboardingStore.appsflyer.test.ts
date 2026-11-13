@@ -1,3 +1,5 @@
+// These cover the upstream flow (Cloud, account, paywall); the private build's route has its own test.
+jest.mock('@/config/privateBuild', () => ({ PRIVATE_BUILD: false }));
 const mockCompleteOnboarding = jest.fn();
 const mockLogTutorialCompletion = jest.fn();
 

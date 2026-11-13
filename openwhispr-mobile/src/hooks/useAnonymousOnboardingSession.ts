@@ -4,6 +4,7 @@ import { useAuthStore } from '@/store/useAuthStore';
 import { useOnboardingStore } from '@/store/useOnboardingStore';
 import { hasRealAccountHistory } from '@/sync/syncIdentity';
 import { FIRST_ONBOARDING_STEP } from '@/utils/onboarding';
+import { PRIVATE_BUILD } from '@/config/privateBuild';
 
 /**
  * Onboarding runs before signup, so open an anonymous server session for it.
@@ -27,6 +28,7 @@ export function useAnonymousOnboardingSession(): void {
   const currentStep = useOnboardingStore((state) => state.currentStep);
 
   useEffect(() => {
+    if (PRIVATE_BUILD) return;
     if (!isInitialized || !onboardingHydrated || onboardingFinished || user) return;
     // Nothing before the dictation demo needs a session, and a row minted
     // behind the splash would outlive someone who opens the app once and

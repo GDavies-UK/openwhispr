@@ -22,8 +22,10 @@ const mockProcessingModeState: { activeMode: 'cloud' | 'private' } = {
   activeMode: 'cloud',
 };
 
-jest.mock('@sentry/react-native', () => ({
-  captureException: jest.fn(),
+jest.mock('@/lib/sentry', () => ({
+  Sentry: {
+    captureException: jest.fn(),
+  },
 }));
 jest.mock('@/data/remote/notesApi', () => ({
   deleteNote: jest.fn(),
@@ -123,7 +125,7 @@ import { generateLocalMeetingNotes } from '@/lib/notes/localMeetingNotes';
 import * as localReasoning from '@/lib/localReasoning';
 import type { Speaker } from '@/data/types';
 import { SpeakerProfileOwnerAlreadyExistsError } from '@/data/local/notesRepository';
-import * as Sentry from '@sentry/react-native';
+import { Sentry } from '@/lib/sentry';
 
 const speaker = (overrides: Partial<Speaker>): Speaker =>
   ({

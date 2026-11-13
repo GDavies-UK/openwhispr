@@ -29,7 +29,9 @@ jest.mock('@react-native-menu/menu', () => ({
     );
   },
 }));
-jest.mock('@sentry/react-native', () => ({ captureException: jest.fn() }));
+jest.mock('@/lib/sentry', () => ({
+  Sentry: { captureException: jest.fn() },
+}));
 jest.mock('@/components/ui/SystemIcon', () => ({ SystemIcon: () => null }));
 jest.mock('@/components/ui/GlassIconButton', () => ({
   GlassCapsule: ({ children }: { children?: React.ReactNode }) => {

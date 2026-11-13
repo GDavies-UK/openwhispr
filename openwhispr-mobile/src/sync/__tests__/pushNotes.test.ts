@@ -15,10 +15,12 @@ jest.mock('@/lib/apiClient', () => ({
     }
   },
 }));
-jest.mock('@sentry/react-native', () => ({
-  captureMessage: jest.fn(),
-  captureException: jest.fn(),
-  addBreadcrumb: jest.fn(),
+jest.mock('@/lib/sentry', () => ({
+  Sentry: {
+    captureMessage: jest.fn(),
+    captureException: jest.fn(),
+    addBreadcrumb: jest.fn(),
+  },
 }));
 jest.mock('@/data', () => ({
   notesRepository: {
@@ -57,7 +59,7 @@ import {
   updateNote as updateNoteRemote,
   deleteNote,
 } from '@/data/remote/notesApi';
-import * as Sentry from '@sentry/react-native';
+import { Sentry } from '@/lib/sentry';
 import { serializeSegmentsForSync } from '@/lib/notes/remoteTranscript';
 import { ApiError } from '@/lib/apiClient';
 import type { Note, Segment, Speaker } from '@/data/types';

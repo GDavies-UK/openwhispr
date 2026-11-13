@@ -14,10 +14,12 @@ const mockProcessingModeState: { activeMode: 'cloud' | 'private' } = {
   activeMode: 'cloud',
 };
 
-jest.mock('@sentry/react-native', () => ({
-  captureException: jest.fn(),
-  captureMessage: jest.fn(),
-  addBreadcrumb: jest.fn(),
+jest.mock('@/lib/sentry', () => ({
+  Sentry: {
+    captureException: jest.fn(),
+    captureMessage: jest.fn(),
+    addBreadcrumb: jest.fn(),
+  },
 }));
 jest.mock('@/data/remote/notesApi', () => ({
   deleteNote: jest.fn(),
