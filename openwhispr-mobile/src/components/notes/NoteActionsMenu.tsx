@@ -154,7 +154,7 @@ export function NoteActionsMenu({
         Sentry.captureException(err, { tags: { sync: 'setNotePrivacy.toggle' } });
         Alert.alert(
           'Cloud copy removal pending',
-          'The note stays private on this device. Its cloud copy could not be removed yet; OpenWhispr will retry when sync is available.',
+          'The note stays private on this device. Its cloud copy could not be removed yet; Ding Ding will retry when sync is available.',
         );
       });
       return;

@@ -6,6 +6,7 @@
 // the computer and the languages with the same helpers (localSetupLabels.ts).
 // Settings are only written by onProceed.
 import { useMemo, useState, type ReactElement } from "react";
+import { PRIVATE_BUILD } from "../../config/privateBuildUi";
 import { useTranslation } from "react-i18next";
 import { Button } from "../ui/button";
 import { ProviderIcon } from "../ui/ProviderIcon";
@@ -276,7 +277,9 @@ function SetupRow({
     </button>
   ) : unavailable ? (
     // The organization's allow-list rules this row out, not the computer, so Cloud isn't the advice.
+    // A private build has no Cloud to recommend.
     cloudAllowed &&
+    !PRIVATE_BUILD &&
     row.reason !== "organization" && (
       <span className={`ms-1.5 shrink-0 ${BADGE_CLASS}`}>
         {t("onboarding.rehaul.localSetup.badge.cloud")}
@@ -510,33 +513,40 @@ export function LocalSetupStep({
       <ComputerCard profile={plan.profile} languageTags={plan.languageTags} />
 
       <div className={`mt-4 ${PANEL_CLASS}`}>
-        {plan.rows.map((planRow) => {
-          const row =
-            planRow.id === "dictation" && completedRetiredDictation
-              ? completedRetiredDictation
-              : planRow;
-          const on = row.id === "dictation" || switches[row.id];
-          // The graphics pack's size shows on the row it downloads with, unnamed.
-          const pack =
-            queue
-              .find(({ rowId }) => rowId === row.id)
-              ?.items.find((item) => item.kind === "llamaVulkan") ?? null;
-          return (
-            <SetupRow
-              key={row.id}
-              row={row}
-              on={on}
-              description={describe(row, on)}
-              size={rowSizeLabel(row, pack)}
-              progress={downloads.rows[row.id]}
-              started={downloads.started}
-              switchable={row.id !== "dictation"}
-              cloudAllowed={plan.cloudAllowed}
-              onToggle={() => row.id !== "dictation" && toggle(row.id)}
-              onRetry={() => downloads.retry(row.id)}
-            />
-          );
-        })}
+        {plan.rows
+          // A private build has no Cloud to fall back on, so an assistant this computer
+          // can't run is left out rather than shown as unavailable.
+          .filter(
+            (planRow) =>
+              !(PRIVATE_BUILD && planRow.id === "assistant" && planRow.label === "unavailable")
+          )
+          .map((planRow) => {
+            const row =
+              planRow.id === "dictation" && completedRetiredDictation
+                ? completedRetiredDictation
+                : planRow;
+            const on = row.id === "dictation" || switches[row.id];
+            // The graphics pack's size shows on the row it downloads with, unnamed.
+            const pack =
+              queue
+                .find(({ rowId }) => rowId === row.id)
+                ?.items.find((item) => item.kind === "llamaVulkan") ?? null;
+            return (
+              <SetupRow
+                key={row.id}
+                row={row}
+                on={on}
+                description={describe(row, on)}
+                size={rowSizeLabel(row, pack)}
+                progress={downloads.rows[row.id]}
+                started={downloads.started}
+                switchable={row.id !== "dictation"}
+                cloudAllowed={plan.cloudAllowed}
+                onToggle={() => row.id !== "dictation" && toggle(row.id)}
+                onRetry={() => downloads.retry(row.id)}
+              />
+            );
+          })}
       </div>
 
       <div className="mt-5">

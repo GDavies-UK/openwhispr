@@ -24,3 +24,21 @@ test("the private build has no Plan & Billing section", async () => {
     );
   }
 });
+
+test("the private build's first run has no account screen and no Cloud choice", async () => {
+  const { getOnboardingRoute, createOnboardingSession } =
+    await import("../../src/components/onboarding/flow.ts");
+
+  const session = createOnboardingSession();
+  assert.equal(session.authPath, "guest");
+  assert.equal(session.setupMode, "local");
+  assert.equal(session.currentStepId, "permissions");
+
+  // Whatever an older saved session says, the route is the same three steps.
+  for (const authPath of [null, "guest", "account"]) {
+    for (const setupMode of [null, "cloud", "byok", "local"]) {
+      const route = getOnboardingRoute({ authPath, setupMode, agentAllowed: true });
+      assert.deepEqual(route, ["permissions", "dictation-hotkey", "local-setup"]);
+    }
+  }
+});

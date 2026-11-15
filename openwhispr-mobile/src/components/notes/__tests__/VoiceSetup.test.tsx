@@ -29,7 +29,7 @@ describe('VoiceSetupBanner', () => {
       <VoiceSetupBanner onSetUp={onSetUp} onDismiss={onDismiss} />,
     );
 
-    expect(getByText('Teach OpenWhispr your voice')).toBeTruthy();
+    expect(getByText('Teach Ding Ding your voice')).toBeTruthy();
     expect(getByText('Your next on-device meetings will label you as Me.')).toBeTruthy();
     expect(getByTestId('voice-setup-banner-dismiss').props.accessibilityLabel).toBe(
       'Dismiss voice setup',

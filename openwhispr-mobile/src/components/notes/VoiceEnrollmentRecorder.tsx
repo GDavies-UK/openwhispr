@@ -49,10 +49,10 @@ interface VoiceEnrollmentRecorderProps {
 
 // Reading the script aloud is the consent, so it names what the profile is for.
 export const VOICE_ENROLLMENT_SCRIPT =
-  "I'm teaching OpenWhispr my voice so it can label me in my meeting notes. This voice profile stays on my device, is only used to recognize me in recordings I choose to process, and I can delete it at any time.";
+  "I'm teaching Ding Ding my voice so it can label me in my meeting notes. This voice profile stays on my device, is only used to recognize me in recordings I choose to process, and I can delete it at any time.";
 
 const MIC_PERMISSION_FAILURE =
-  "Couldn't start the microphone. Check that OpenWhispr can use it in Settings, then try again.";
+  "Couldn't start the microphone. Check that Ding Ding can use it in Settings, then try again.";
 const MIC_START_FAILURE = "Couldn't start the microphone. Try again.";
 const STOP_FAILURE = "Couldn't finish the recording. Try again.";
 
@@ -415,7 +415,7 @@ export function VoiceEnrollmentRecorder({
           Download the speaker model
         </Text>
         <Text className="text-[15px] leading-5 text-secondaryLabel">
-          OpenWhispr needs a one-time download of about 100 MB to recognize voices. It runs entirely
+          Ding Ding needs a one-time download of about 100 MB to recognize voices. It runs entirely
           on your device after that.
         </Text>
         <Button

@@ -198,7 +198,7 @@ it('lets a replay walk through keyboard setup in Settings again', async () => {
 
   fireEvent.press(screen.getByText('Open Settings'));
   await waitFor(() => expect(openSettings).toHaveBeenCalledTimes(1));
-  expect(screen.getByText('Use OpenWhispr in any app.')).toBeTruthy();
+  expect(screen.getByText('Use Ding Ding in any app.')).toBeTruthy();
   expect(mockNext).not.toHaveBeenCalled();
 });
 
@@ -285,7 +285,7 @@ it('lets the keyboard cover the switch step’s button, with help to get unstuck
   const dismiss = jest.spyOn(Keyboard, 'dismiss');
   fireEvent.press(screen.getByLabelText('Help'));
   expect(dismiss).toHaveBeenCalled();
-  expect(screen.getByText('Can’t switch to OpenWhispr?')).toBeTruthy();
+  expect(screen.getByText('Can’t switch to Ding Ding?')).toBeTruthy();
   expect(screen.queryByText('Continue anyway')).toBeNull();
 });
 

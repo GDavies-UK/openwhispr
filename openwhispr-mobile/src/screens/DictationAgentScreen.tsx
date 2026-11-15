@@ -12,7 +12,7 @@ import { safeHaptics } from '@/lib/utils';
 import { iosColor } from '@/config/colors';
 import { AppFont } from '@/lib/fonts';
 
-const DEFAULT_AGENT_NAME = 'OpenWhispr';
+const DEFAULT_AGENT_NAME = 'Ding Ding';
 
 export function DictationAgentScreen(): React.JSX.Element {
   const config = useConfigStore((state) => state.config);
@@ -56,7 +56,7 @@ export function DictationAgentScreen(): React.JSX.Element {
       <SettingsScreen keyboardShouldPersistTaps="handled">
         <View className="mx-4 mb-2 px-4">
           <Text className="text-[13px] text-secondaryLabel">
-            Tap the wand on the OpenWhispr keyboard and say what to write, like a reply or a rewrite
+            Tap the wand on the Ding Ding keyboard and say what to write, like a reply or a rewrite
             of the selected text. Your assistant drafts it for you to insert, regenerate or change.
             Saying its name while dictating gives no command. It runs on the AI chosen for the Voice
             Assistant in AI Models, whatever Dictation uses.
@@ -80,7 +80,7 @@ export function DictationAgentScreen(): React.JSX.Element {
             icon="person.wave.2"
             mdIcon="UserRoundCog"
             title="Enable Voice Assistant"
-            description="Use the wand on the OpenWhispr keyboard."
+            description="Use the wand on the Ding Ding keyboard."
             rightElement={
               <SettingsSwitch
                 // Shows what runs: the voice assistant is off wherever it can't run.

@@ -56,7 +56,7 @@ export function VoiceProfileList({
                 Label speakers automatically
               </Text>
               <Text className="text-center text-[15px] leading-5 text-tertiaryLabel">
-                Record a short voice sample and OpenWhispr will recognize you in future meeting
+                Record a short voice sample and Ding Ding will recognize you in future meeting
                 transcripts instead of showing "Speaker 1". Works with on-device transcription.
                 Voice samples stay on this device and can be deleted anytime.
               </Text>

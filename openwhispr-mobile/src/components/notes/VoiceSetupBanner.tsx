@@ -19,7 +19,7 @@ export function VoiceSetupBanner({ onSetUp, onDismiss }: VoiceSetupBannerProps):
         <SystemIcon name="waveform" mdName="AudioLines" size={20} color="brand" />
       </View>
       <View className="min-w-0 flex-1">
-        <Text className="text-[15px] font-semibold text-label">Teach OpenWhispr your voice</Text>
+        <Text className="text-[15px] font-semibold text-label">Teach Ding Ding your voice</Text>
         <Text className="text-[13px] leading-[18px] text-secondaryLabel">
           Your next on-device meetings will label you as Me.
         </Text>

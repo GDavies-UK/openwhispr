@@ -995,7 +995,7 @@ describe('the Voice Assistant page', () => {
     expect(screen.getByLabelText('Voice Assistant').props.value).toBe(false);
     expect(screen.queryByText('OpenWhispr Cloud')).toBeNull();
     expect(screen.queryByText('Voice Assistant Settings')).toBeNull();
-    expect(screen.getByText('The OpenWhispr keyboard shows no wand.')).toBeTruthy();
+    expect(screen.getByText('The Ding Ding keyboard shows no wand.')).toBeTruthy();
   });
 
   // The voice assistant runs its own selection, so Local Mode leaves it on.

@@ -33,13 +33,13 @@ beforeEach(() => jest.restoreAllMocks());
 
 it('lists the fixes for the common ways switching gets stuck', () => {
   renderSheet();
-  expect(screen.getByText('Can’t switch to OpenWhispr?')).toBeTruthy();
-  expect(screen.getByText(/Turn on OpenWhispr in Settings → Keyboards/)).toBeTruthy();
+  expect(screen.getByText('Can’t switch to Ding Ding?')).toBeTruthy();
+  expect(screen.getByText(/Turn on Ding Ding in Settings → Keyboards/)).toBeTruthy();
   expect(screen.getByText(/It’s below the letters, bottom left/)).toBeTruthy();
   expect(screen.getByText(/Turn on Allow Full Access in Settings → Keyboards\./)).toBeTruthy();
 });
 
-it('opens OpenWhispr’s page in iOS Settings', () => {
+it('opens Ding Ding’s page in iOS Settings', () => {
   const openSettings = jest.spyOn(Linking, 'openSettings').mockResolvedValue(undefined);
   renderSheet();
   fireEvent.press(screen.getByText('Open Settings'));

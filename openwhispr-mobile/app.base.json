@@ -1,9 +1,8 @@
 {
   "expo": {
-    "name": "OpenWhispr",
+    "name": "Ding Ding",
     "slug": "openwhispr-mobile",
     "scheme": "openwhispr",
-    "owner": "gizmo-labs",
     "version": "1.2.6",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,8 +12,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.gizmolabs.openwhispr",
-      "usesAppleSignIn": true,
+      "bundleIdentifier": "uk.co.bustools.dingding",
       "infoPlist": {
         "NSMicrophoneUsageDescription": "This app needs access to the microphone to record audio for transcription.",
         "CFBundleAllowMixedLocalizations": true,
@@ -30,16 +28,15 @@
             "NSPrivacyAccessedAPITypeReasons": ["CA92.1"]
           }
         ]
-      },
-      "appleTeamId": "T832773L2J"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#e5273a"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.gizmolabs.openwhispr",
+      "package": "uk.co.bustools.dingding",
       "permissions": ["android.permission.RECORD_AUDIO", "android.permission.MODIFY_AUDIO_SETTINGS"]
     },
     "web": {
@@ -63,7 +60,6 @@
           "enableBackgroundRecording": true
         }
       ],
-      "expo-apple-authentication",
       "./plugins/provider-networking/withProviderNetworking",
       "./plugins/ios-cxx-standard/withIosCxxStandard",
       "./plugins/pod-deployment-target/withPodDeploymentTarget",
@@ -95,23 +91,22 @@
     },
     "extra": {
       "eas": {
-        "projectId": "8447d067-4553-472a-8783-554c3adc2352",
         "build": {
           "experimental": {
             "ios": {
               "appExtensions": [
                 {
                   "targetName": "OpenWhisprKeyboard",
-                  "bundleIdentifier": "com.gizmolabs.openwhispr.keyboard",
+                  "bundleIdentifier": "uk.co.bustools.dingding.keyboard",
                   "entitlements": {
-                    "com.apple.security.application-groups": ["group.com.gizmolabs.openwhispr"]
+                    "com.apple.security.application-groups": ["group.uk.co.bustools.dingding"]
                   }
                 },
                 {
                   "targetName": "OpenWhisprActivity",
-                  "bundleIdentifier": "com.gizmolabs.openwhispr.activity",
+                  "bundleIdentifier": "uk.co.bustools.dingding.activity",
                   "entitlements": {
-                    "com.apple.security.application-groups": ["group.com.gizmolabs.openwhispr"]
+                    "com.apple.security.application-groups": ["group.uk.co.bustools.dingding"]
                   }
                 }
               ]

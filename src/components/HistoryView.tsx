@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { PRIVATE_BUILD } from "../config/privateBuildUi";
 import { useTranslation } from "react-i18next";
 import { cn } from "./lib/utils";
 import { useUiLocale } from "../hooks/useUiLocale";
@@ -250,14 +251,20 @@ export default function HistoryView({
 
         {/* With history, drop the day cards by one date row (pt-2 + text-sm line + pb-2.5) so
             the first one lines up with the first transcription. */}
-        <div className={cn("hidden w-80 shrink-0 md:block", history.length > 0 && "pt-[2.375rem]")}>
-          <UpcomingMeetings
-            events={events}
-            isLoading={eventsLoading}
-            isConnected={isConnected}
-            onConnectCalendar={onOpenIntegrations}
-          />
-        </div>
+        {/* Private build: connecting a Google or Microsoft calendar needs OAuth client ids
+            this build doesn't carry, so the panel would only offer a button that fails. */}
+        {!PRIVATE_BUILD && (
+          <div
+            className={cn("hidden w-80 shrink-0 md:block", history.length > 0 && "pt-[2.375rem]")}
+          >
+            <UpcomingMeetings
+              events={events}
+              isLoading={eventsLoading}
+              isConnected={isConnected}
+              onConnectCalendar={onOpenIntegrations}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

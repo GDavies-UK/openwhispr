@@ -15,7 +15,7 @@ export const VOICE_ENROLLMENT_UNEXPLAINED_FAILURE =
 
 /** Alert title and message for teaching your voice when you already have a profile. */
 export const VOICE_ALREADY_TAUGHT_ALERT = [
-  "You've already taught OpenWhispr your voice",
+  "You've already taught Ding Ding your voice",
   'Open it in Voice Profiles and choose Retrain Voice.',
 ] as const;
 

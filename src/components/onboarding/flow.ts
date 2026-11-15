@@ -1,4 +1,5 @@
 import { SIGN_IN_PROMPTED_AT_KEY } from "../../utils/requestSignIn";
+import { PRIVATE_BUILD } from "../../config/privateBuildUi";
 import { PENDING_GRAPHICS_PACK_KEY, PENDING_LOCAL_MODELS_KEY } from "./pendingLocalModels";
 import type { PermissionGuideId } from "../../types/permissionGuide";
 
@@ -210,10 +211,12 @@ export function createOnboardingResumeState(): OnboardingResumeState {
 export function createOnboardingSession(): OnboardingSession {
   return {
     version: ONBOARDING_FLOW_VERSION,
-    currentStepId: "auth",
+    // The private build has no account and only runs locally, so it starts as a
+    // guest on the Local route (PRIVATE_ROUTE).
+    currentStepId: PRIVATE_BUILD ? PRIVATE_ROUTE[0] : "auth",
     history: [],
-    authPath: null,
-    setupMode: null,
+    authPath: PRIVATE_BUILD ? "guest" : null,
+    setupMode: PRIVATE_BUILD ? "local" : null,
     selfHostedRequested: false,
     screenContextRequested: false,
     permissionGuide: null,
@@ -236,7 +239,13 @@ export function resetOnboardingProgress(storage: OnboardingStorage): void {
   storage.setItem(LEGACY_ONBOARDING_STEP_KEY, "0");
 }
 
+// Private build: no account step and no Cloud / own key / Local choice. The
+// guest route's permission grants and hotkey stay (finalizeOnboarding registers
+// the hotkey either way), then local setup, whose Proceed finishes onboarding.
+const PRIVATE_ROUTE: OnboardingStepId[] = ["permissions", "dictation-hotkey", "local-setup"];
+
 export function getOnboardingRoute(context: OnboardingRouteContext): OnboardingStepId[] {
+  if (PRIVATE_BUILD) return [...PRIVATE_ROUTE];
   if (context.authPath === null) return ["auth"];
 
   const setupChoice = context.skipSetupChoice ? [] : (["setup-choice"] as OnboardingStepId[]);

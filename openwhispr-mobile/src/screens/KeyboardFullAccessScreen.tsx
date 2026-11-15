@@ -110,7 +110,7 @@ export default function KeyboardFullAccessScreen() {
         skipLabel="Close"
         title="Dictation needs Full Access."
         titleAccent="Full Access"
-        subtitle="Here's how to turn it on for the OpenWhispr keyboard."
+        subtitle="Here's how to turn it on for the Ding Ding keyboard."
         ctaLabel="Open Settings"
         ctaDisabled={settingsLaunchPending}
         ctaLoading={settingsLaunchPending}
@@ -118,7 +118,7 @@ export default function KeyboardFullAccessScreen() {
       >
         <View className="flex-1 justify-center gap-4">
           {/* Visible before the user leaves, not only after: iOS drops them
-              on Settings ▸ OpenWhispr with no deeper link available, so they
+              on Settings ▸ Ding Ding with no deeper link available, so they
               need to know the two taps that follow before they get there. */}
           <InstructionOverlay title="Steps to turn it on" steps={STEPS} />
           <FullAccessReasons />

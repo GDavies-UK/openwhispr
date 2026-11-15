@@ -1,9 +1,10 @@
-import Svg, { Circle, Line } from 'react-native-svg';
+import Svg, { Circle, Path, Rect } from 'react-native-svg';
 
 /**
- * The OpenWhispr brand mark — a ringed waveform (tall center bar flanked by two
- * short bars), drawn as strokes with a transparent background so it sits cleanly
- * on any surface. Reconstructed from the design SVG; no blue app-icon tile.
+ * The app's brand mark: Ding Ding's bell push, ringing on both sides (the
+ * conductor's two rings). Drawn in one colour on a transparent background so it
+ * sits on any surface; the app icon puts the same drawing on a red tile.
+ * Geometry matches the desktop's BrandMarkIcon and the icon artwork.
  */
 export function OpenWhisprMark({
   size = 32,
@@ -13,34 +14,32 @@ export function OpenWhisprMark({
   color?: string;
 }) {
   return (
-    <Svg width={size} height={size} viewBox="0 0 41.23 41.23">
-      <Circle cx={20.617} cy={20.617} r={18.889} fill="none" stroke={color} strokeWidth={3.456} />
-      <Line
-        x1={13.86}
-        y1={17.39}
-        x2={13.86}
-        y2={23.91}
+    <Svg width={size} height={size} viewBox="8 22 104 76">
+      <Rect
+        x={41}
+        y={31}
+        width={38}
+        height={58}
+        rx={13}
+        fill="none"
         stroke={color}
-        strokeWidth={4.246}
+        strokeWidth={6}
+      />
+      <Circle cx={60} cy={60} r={11} fill={color} />
+      <Path
+        d="M28 48q-6 12 0 24M92 48q6 12 0 24"
+        fill="none"
+        stroke={color}
+        strokeWidth={6}
         strokeLinecap="round"
       />
-      <Line
-        x1={20.61}
-        y1={13.04}
-        x2={20.61}
-        y2={28.19}
+      <Path
+        d="M18 40q-11 20 0 40M102 40q11 20 0 40"
+        fill="none"
         stroke={color}
-        strokeWidth={4.246}
+        strokeWidth={6}
         strokeLinecap="round"
-      />
-      <Line
-        x1={27.37}
-        y1={17.39}
-        x2={27.37}
-        y2={23.91}
-        stroke={color}
-        strokeWidth={4.246}
-        strokeLinecap="round"
+        opacity={0.55}
       />
     </Svg>
   );

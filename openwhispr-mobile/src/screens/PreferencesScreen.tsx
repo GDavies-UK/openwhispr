@@ -17,7 +17,7 @@ export default function PreferencesScreen() {
   const autoLearn = config?.autoLearnCorrections ?? true;
   const language = getLanguage(config?.preferredLanguage ?? DEFAULT_LANGUAGE);
   const keyboardTone = config?.keyboardTone ?? DEFAULT_KEYBOARD_TONE;
-  const agentName = config ? getDictationAgentName(config) : 'OpenWhispr';
+  const agentName = config ? getDictationAgentName(config) : 'Ding Ding';
   const handleToggleAutoLearn = useConfigToggle('autoLearnCorrections');
   const [dictationMode, setDictationMode] = useState(() => LiveActivity.isDictationModeEnabled());
 
@@ -54,7 +54,7 @@ export default function PreferencesScreen() {
         {/* First in the section because it is the prerequisite for everything
             below it, and because the person who needs it most is the one whose
             dictation just died. Routes to the recovery screen rather than
-            Linking.openSettings(): iOS only ever lands on Settings > OpenWhispr,
+            Linking.openSettings(): iOS only ever lands on Settings > Ding Ding,
             and Full Access is two levels deeper, so the taps have to be taught. */}
         <SettingsRow
           iconStyle="line"
@@ -87,7 +87,7 @@ export default function PreferencesScreen() {
           icon="waveform"
           mdIcon="Activity"
           title="Dictation mode"
-          description="Show OpenWhispr in the Dynamic Island while you dictate"
+          description="Show Ding Ding in the Dynamic Island while you dictate"
           rightElement={
             <SettingsSwitch
               value={dictationMode}

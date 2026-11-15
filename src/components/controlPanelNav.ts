@@ -1,4 +1,5 @@
 import type React from "react";
+import { PRIVATE_BUILD } from "../config/privateBuildUi";
 import { useTranslation } from "react-i18next";
 import { Home, BarChart3, MessageSquare, NotebookPen, BookOpen, Upload, Blocks } from "./icons";
 import { isAgentAllowed, isPolicyActionAllowed } from "../stores/policyRules";
@@ -26,7 +27,9 @@ export function useControlPanelNavItems(): ControlPanelNavItem[] {
   return [
     { id: "home", label: t("sidebar.home"), icon: Home },
     { id: "insights", label: t("sidebar.insights"), icon: BarChart3 },
-    ...(agentAllowed
+    // Private build: the assistant needs a model this build's local setup can't always
+    // give it, and Integrations (connectors, calendars) need cloud sign-ins it doesn't have.
+    ...(agentAllowed && !PRIVATE_BUILD
       ? [{ id: "chat" as const, label: t("sidebar.chat"), icon: MessageSquare }]
       : []),
     { id: "personal-notes", label: t("sidebar.notes"), icon: NotebookPen },
@@ -34,6 +37,8 @@ export function useControlPanelNavItems(): ControlPanelNavItem[] {
       ? [{ id: "upload" as const, label: t("sidebar.upload"), icon: Upload }]
       : []),
     { id: "dictionary", label: t("sidebar.dictionary"), icon: BookOpen },
-    { id: "integrations", label: t("sidebar.integrations"), icon: Blocks },
+    ...(PRIVATE_BUILD
+      ? []
+      : [{ id: "integrations" as const, label: t("sidebar.integrations"), icon: Blocks }]),
   ];
 }

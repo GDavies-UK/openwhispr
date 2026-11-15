@@ -25,6 +25,7 @@ const {
   systemPreferences,
 } = require("electron");
 const path = require("path");
+const { PRIVATE_BUILD } = require("./src/config/privateBuild");
 const http = require("http");
 const tls = require("tls");
 require("dotenv").config({ path: path.join(__dirname, ".env") });
@@ -85,6 +86,10 @@ process.env.OPENWHISPR_CHANNEL = APP_CHANNEL;
 
 function configureChannelUserDataPath() {
   if (APP_CHANNEL === "production") {
+    // The private build is called Ding Ding, and Electron names the data folder
+    // after the product. Keep using the OpenWhispr folder so an install made
+    // before the rename keeps its notes, settings and downloaded models.
+    if (PRIVATE_BUILD) app.setPath("userData", path.join(app.getPath("appData"), "OpenWhispr"));
     return;
   }
 
@@ -270,8 +275,9 @@ if (!gotSingleInstanceLock) {
 const isLiveWindow = (window) => window && !window.isDestroyed();
 
 // Ensure macOS menus use the proper casing for the app name
-if (process.platform === "darwin" && app.getName() !== "OpenWhispr") {
-  app.setName("OpenWhispr");
+const APP_DISPLAY_NAME = PRIVATE_BUILD ? "Ding Ding" : "OpenWhispr";
+if (process.platform === "darwin" && app.getName() !== APP_DISPLAY_NAME) {
+  app.setName(APP_DISPLAY_NAME);
 }
 
 // Add global error handling for uncaught exceptions

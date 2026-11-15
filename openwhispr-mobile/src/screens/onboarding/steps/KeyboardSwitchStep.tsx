@@ -69,7 +69,7 @@ export function KeyboardSwitchStep() {
       <OnboardingShell
         progress={progress}
         onHelp={openHelp}
-        title="Press and hold the globe icon in the bottom-left corner of your keyboard, then select OpenWhispr."
+        title="Press and hold the globe icon in the bottom-left corner of your keyboard, then select Ding Ding."
         titleNode={titleNode}
         ctaLabel={advanceError ? 'Retry' : 'I switched'}
         onCta={goNext}
@@ -102,7 +102,7 @@ export function KeyboardSwitchStep() {
         onClose={closeHelp}
         onDismissed={() => inputRef.current?.focus()}
       />
-      {detected ? <KeyboardDetectedToast message="OpenWhispr keyboard is active" /> : null}
+      {detected ? <KeyboardDetectedToast message="Ding Ding keyboard is active" /> : null}
     </>
   );
 }
@@ -114,7 +114,7 @@ function KeyboardSwitchTitle() {
         accessibilityRole="header"
         className="text-[28px] font-medium leading-[34px] text-label"
       >
-        Switch to OpenWhispr.
+        Switch to Ding Ding.
       </Text>
       <View className="flex-row flex-wrap items-center">
         <Text
@@ -132,7 +132,7 @@ function KeyboardSwitchTitle() {
         >
           {' '}
           icon in the bottom-left corner of your keyboard, then select{' '}
-          <Text className="text-primary">OpenWhispr</Text>
+          <Text className="text-primary">Ding Ding</Text>
         </Text>
       </View>
     </View>
@@ -165,7 +165,7 @@ function AnimatedKeyboardSwitchPreview() {
       <Divider />
       <PopoverRow label="English (US)" />
       <Divider />
-      <HighlightedRow label="OpenWhispr" progress={progress} />
+      <HighlightedRow label="Ding Ding" progress={progress} />
       <Hand progress={progress} />
     </View>
   );

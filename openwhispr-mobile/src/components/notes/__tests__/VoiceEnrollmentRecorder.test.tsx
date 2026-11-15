@@ -476,7 +476,7 @@ describe('VoiceEnrollmentRecorder', () => {
     });
 
     expect(showMicPermissionAlert).toHaveBeenCalledTimes(1);
-    expect(utils.getByText(/check that OpenWhispr can use it in Settings/i)).toBeTruthy();
+    expect(utils.getByText(/check that Ding Ding can use it in Settings/i)).toBeTruthy();
   });
 
   it('shows a failure and Try Again when the microphone cannot start', async () => {
