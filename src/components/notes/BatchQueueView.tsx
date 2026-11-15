@@ -14,6 +14,8 @@ interface BatchQueueViewProps {
   totalCount: number;
   isProcessing: boolean;
   onRemoveItem: (id: string) => void;
+  /** Lets each queued file be given a meeting name before it is transcribed. */
+  onTitleChange?: (id: string, title: string) => void;
   onCancelAll: () => void;
   onClearQueue: () => void;
   onOpenNote?: (noteId: number) => void;
@@ -64,6 +66,7 @@ export default function BatchQueueView({
   totalCount,
   isProcessing,
   onRemoveItem,
+  onTitleChange,
   onCancelAll,
   onClearQueue,
   onOpenNote,
@@ -123,7 +126,31 @@ export default function BatchQueueView({
             )}
           >
             <StatusIcon status={item.status} />
-            <span className="flex-1 truncate text-foreground/80">{item.name}</span>
+            {item.source === "file" && item.status === "queued" && onTitleChange ? (
+              <div className="min-w-0 flex-1">
+                <input
+                  type="text"
+                  value={item.title ?? ""}
+                  maxLength={200}
+                  onChange={(event) => onTitleChange(item.id, event.target.value)}
+                  placeholder={t("notes.upload.meetingNamePlaceholder")}
+                  aria-label={t("notes.upload.meetingNameFor", { name: item.name })}
+                  className="input-inline h-7 w-full rounded-md border border-border/70 bg-background px-2 text-sm text-foreground placeholder:text-muted-foreground/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/30 dark:border-white/15"
+                />
+                <p dir="ltr" className="mt-0.5 truncate text-start text-xs text-muted-foreground">
+                  {item.name}
+                </p>
+              </div>
+            ) : item.source === "file" && item.title?.trim() ? (
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-foreground/80">{item.title.trim()}</p>
+                <p dir="ltr" className="truncate text-start text-xs text-muted-foreground">
+                  {item.name}
+                </p>
+              </div>
+            ) : (
+              <span className="flex-1 truncate text-foreground/80">{item.name}</span>
+            )}
 
             {item.status === "downloading" && (
               <div className="h-1 w-16 overflow-hidden rounded-full bg-foreground/8 dark:bg-white/10">

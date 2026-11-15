@@ -3527,7 +3527,11 @@
       "urlYoutubeBlocked": "YouTube 暫時封鎖了來自您網路的下載。請稍後再試。",
       "customEndpointInvalid": "自訂轉錄端點未設定或無效。請在設定中更新。",
       "streamingOnlyProvider": "此服務商僅支援即時轉錄。請為檔案上傳與重試選擇其他服務商。",
-      "disabledByOrg": "您的組織已停用音訊上傳。"
+      "disabledByOrg": "您的組織已停用音訊上傳。",
+      "meetingName": "會議名稱",
+      "meetingNamePlaceholder": "例如：每週營運例會",
+      "meetingNameHint": "留空則根據會議內容命名。",
+      "meetingNameFor": "{{name}} 的會議名稱"
     },
     "meeting": {
       "title": "會議筆記",

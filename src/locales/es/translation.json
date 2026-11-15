@@ -3579,7 +3579,11 @@
       "urlYoutubeBlocked": "YouTube está bloqueando temporalmente las descargas desde tu red. Inténtalo de nuevo más tarde.",
       "customEndpointInvalid": "El endpoint de transcripción personalizado no está configurado o no es válido. Actualízalo en Ajustes.",
       "streamingOnlyProvider": "Este proveedor solo admite transcripción en directo. Elige otro proveedor para subir archivos y reintentos.",
-      "disabledByOrg": "Tu organización ha desactivado la carga de audio."
+      "disabledByOrg": "Tu organización ha desactivado la carga de audio.",
+      "meetingName": "Nombre de la reunión",
+      "meetingNamePlaceholder": "p. ej., Revisión semanal de operaciones",
+      "meetingNameHint": "Déjalo en blanco para ponerle nombre a partir de lo que se dijo.",
+      "meetingNameFor": "Nombre de la reunión para {{name}}"
     },
     "meeting": {
       "title": "Notas de reunión",

@@ -4079,7 +4079,11 @@
       "urlYoutubeBlocked": "YouTube bloque temporairement les téléchargements depuis votre réseau. Réessayez dans un moment.",
       "customEndpointInvalid": "Le point de terminaison de transcription personnalisé n'est pas configuré ou est invalide. Mettez-le à jour dans les réglages.",
       "streamingOnlyProvider": "Ce fournisseur ne prend en charge que la transcription en direct. Choisissez un autre fournisseur pour les imports de fichiers et les nouvelles tentatives.",
-      "disabledByOrg": "L’importation de fichiers audio est désactivée par votre organisation."
+      "disabledByOrg": "L’importation de fichiers audio est désactivée par votre organisation.",
+      "meetingName": "Nom de la réunion",
+      "meetingNamePlaceholder": "ex. : Point hebdomadaire des opérations",
+      "meetingNameHint": "Laissez vide pour la nommer d’après ce qui a été dit.",
+      "meetingNameFor": "Nom de la réunion pour {{name}}"
     },
     "meeting": {
       "title": "Notes de réunion",

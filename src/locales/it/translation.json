@@ -3527,7 +3527,11 @@
       "urlYoutubeBlocked": "YouTube sta bloccando temporaneamente i download dalla tua rete. Riprova tra poco.",
       "customEndpointInvalid": "L'endpoint di trascrizione personalizzato non è configurato o non è valido. Aggiornalo nelle Impostazioni.",
       "streamingOnlyProvider": "Questo provider supporta solo la trascrizione dal vivo. Scegli un altro provider per i caricamenti di file e i nuovi tentativi.",
-      "disabledByOrg": "Il caricamento di audio è disattivato dalla tua organizzazione."
+      "disabledByOrg": "Il caricamento di audio è disattivato dalla tua organizzazione.",
+      "meetingName": "Nome della riunione",
+      "meetingNamePlaceholder": "es. Revisione settimanale delle operazioni",
+      "meetingNameHint": "Lascia vuoto per darle un nome in base a ciò che è stato detto.",
+      "meetingNameFor": "Nome della riunione per {{name}}"
     },
     "meeting": {
       "title": "Note delle riunioni",
