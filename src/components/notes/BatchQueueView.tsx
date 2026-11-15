@@ -129,6 +129,7 @@ export default function BatchQueueView({
             {item.source === "file" && item.status === "queued" && onTitleChange ? (
               <div className="min-w-0 flex-1">
                 <input
+                  dir="auto"
                   type="text"
                   value={item.title ?? ""}
                   maxLength={200}

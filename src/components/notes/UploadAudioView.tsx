@@ -1696,6 +1696,7 @@ function SelectedView({
           {t("notes.upload.meetingName")}
         </label>
         <input
+          dir="auto"
           id={meetingTitleId}
           type="text"
           value={meetingTitle}
