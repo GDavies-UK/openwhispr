@@ -54,6 +54,7 @@ for (const phase of ["title", "save"]) {
     const noop = () => {};
     const context = {
       file: { path: "/tmp/audio.wav", name: "audio.wav", fromUrl: false },
+      meetingTitle: "",
       batch: { isProcessing: false },
       usePolicyStore: { getState: () => ({ allowed: true }) },
       isAudioFeatureAllowed: (policy) => policy.allowed,
@@ -143,6 +144,7 @@ test("main policy refusals appear in Spanish upload errors", async (t) => {
     const noop = () => {};
     const context = {
       file: { path: "/tmp/audio.wav" },
+      meetingTitle: "",
       batch: { isProcessing: false },
       usePolicyStore: { getState: () => ({}) },
       isAudioFeatureAllowed: () => true,
@@ -190,6 +192,7 @@ test("an upload refused before it starts names the reason the policy gives", asy
     const errors = [];
     const context = {
       file: { path: "/tmp/audio.wav" },
+      meetingTitle: "",
       batch: { isProcessing: false },
       usePolicyStore: { getState: () => policy },
       isAudioFeatureAllowed: () => false,
@@ -230,6 +233,7 @@ test("an upload refused for its local model shows the reason instead of nothing"
     const states = [];
     const context = {
       file: { path: "/tmp/audio.wav" },
+      meetingTitle: "",
       batch: { isProcessing: false },
       usePolicyStore: { getState: () => policy },
       isAudioFeatureAllowed: () => true,
@@ -272,4 +276,64 @@ test("the upload label never names a model the policy won't run", () => {
   );
   assert.equal(label(null, { whisperModel: "small" }), "Whisper · small");
   assert.equal(label(null), "Whisper · base", "a guest's blank still means the engine default");
+});
+
+test("a meeting name typed when the recording is loaded becomes the note title", async () => {
+  for (const [typed, expected, generated] of [
+    ["  Weekly ops review  ", "Weekly ops review", 0],
+    ["   ", "Generated", 1],
+  ]) {
+    const saved = [];
+    let generatedCalls = 0;
+    const noop = () => {};
+    const context = {
+      file: { path: "/tmp/REC001.mp3", name: "REC001.mp3", fromUrl: false },
+      meetingTitle: typed,
+      batch: { isProcessing: false },
+      usePolicyStore: { getState: () => ({ allowed: true }) },
+      isAudioFeatureAllowed: () => true,
+      isManagedTranscriptionActive: () => false,
+      isTranscriptionContextAllowed: () => true,
+      getSettings: () => ({}),
+      downloadedTempPath: null,
+      runIdRef: { current: 0 },
+      activeRequestIdRef: { current: null },
+      crypto: { randomUUID: () => "upload-request" },
+      setState: noop,
+      setError: noop,
+      setProgress: noop,
+      setChunkProgress: noop,
+      setDiarizationWarning: noop,
+      setResult: noop,
+      setPartialWarning: noop,
+      setNoteId: noop,
+      setDownloadedTempPath: noop,
+      selectedFolderId: "",
+      isOpenWhisprCloud: false,
+      managedActive: false,
+      isLargeFile: false,
+      progressRef: { current: null },
+      progressCleanupRef: { current: null },
+      setInterval: () => 1,
+      clearInterval: noop,
+      buildDiarizationSettings: async () => ({ enabled: false }),
+      buildTranscriptionConfig: () => ({}),
+      transcribeFileWithSpeakers: async () => ({ success: true, text: "Transcript" }),
+      generateTitle: async () => {
+        generatedCalls++;
+        return "Generated";
+      },
+      uploadTitleFallback: () => "Fallback",
+      phoneRecordingTitle: () => null,
+      saveUploadNote: async (note) => {
+        saved.push(note);
+        return { success: true, note: { id: 1 } };
+      },
+      window: { electronAPI: {} },
+      t: (key) => key,
+    };
+    await vm.runInNewContext(callbacks, context).transcribe();
+    assert.equal(saved[0]?.title, expected);
+    assert.equal(generatedCalls, generated, "no model call when the user named it");
+  }
 });

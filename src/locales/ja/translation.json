@@ -3608,7 +3608,11 @@
       "urlYoutubeBlocked": "YouTubeがお使いのネットワークからのダウンロードを一時的にブロックしています。しばらくしてからもう一度お試しください。",
       "customEndpointInvalid": "カスタム文字起こしエンドポイントが未設定か無効です。設定から更新してください。",
       "streamingOnlyProvider": "このプロバイダーはライブ文字起こしのみに対応しています。ファイルのアップロードや再実行には別のプロバイダーを選択してください。",
-      "disabledByOrg": "組織によって音声のアップロードが無効にされています。"
+      "disabledByOrg": "組織によって音声のアップロードが無効にされています。",
+      "meetingName": "会議名",
+      "meetingNamePlaceholder": "例：週次オペレーション会議",
+      "meetingNameHint": "空欄の場合は、話した内容から名前を付けます。",
+      "meetingNameFor": "{{name}} の会議名"
     },
     "meeting": {
       "title": "議事録",

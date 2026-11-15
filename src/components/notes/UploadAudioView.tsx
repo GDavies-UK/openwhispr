@@ -170,6 +170,14 @@ export default function UploadAudioView({ onNoteCreated, onOpenSettings }: Uploa
     fromUrl?: boolean;
     durationSeconds?: number | null;
   } | null>(null);
+  // The meeting name, asked for as soon as a recording is loaded. Starts as the
+  // title the phone put in the file name, or a downloaded video's title; blank
+  // leaves the note named from what was said, as before.
+  const [meetingTitle, setMeetingTitle] = useState("");
+  useEffect(() => {
+    if (!file) setMeetingTitle("");
+    else setMeetingTitle(file.fromUrl ? file.name : (phoneRecordingTitle(file.name) ?? ""));
+  }, [file]);
   const [result, setResult] = useState<string | null>(null);
   const [partialWarning, setPartialWarning] = useState<{ failed: number; total: number } | null>(
     null
@@ -736,6 +744,7 @@ export default function UploadAudioView({ onNoteCreated, onOpenSettings }: Uploa
       return;
     }
     const currentFile = file;
+    const typedTitle = meetingTitle.trim();
     const currentTempPath = downloadedTempPath;
     const runId = ++runIdRef.current;
     const requestId = crypto.randomUUID();
@@ -802,7 +811,9 @@ export default function UploadAudioView({ onNoteCreated, onOpenSettings }: Uploa
 
         let title: string;
         const phoneTitle = currentFile.fromUrl ? null : phoneRecordingTitle(currentFile.name);
-        if (currentFile.fromUrl) {
+        if (typedTitle) {
+          title = typedTitle;
+        } else if (currentFile.fromUrl) {
           title = currentFile.name;
         } else if (phoneTitle) {
           title = phoneTitle;
@@ -1209,6 +1220,7 @@ export default function UploadAudioView({ onNoteCreated, onOpenSettings }: Uploa
               totalCount={batch.totalCount}
               isProcessing={batch.isProcessing}
               onRemoveItem={batch.removeItem}
+              onTitleChange={batch.setItemTitle}
               onCancelAll={batch.cancelAll}
               onClearQueue={() => {
                 setSkippedNotice(null);
@@ -1250,6 +1262,8 @@ export default function UploadAudioView({ onNoteCreated, onOpenSettings }: Uploa
             getActiveModelLabel={getActiveModelLabel}
             reset={reset}
             handleTranscribe={handleTranscribe}
+            meetingTitle={meetingTitle}
+            onMeetingTitleChange={setMeetingTitle}
             transcribeDisabled={batch.isProcessing || !uploadAllowedByPolicy}
             requiresUpgrade={!!requiresUpgrade}
             fileTooLarge={fileTooLarge}
@@ -1600,6 +1614,8 @@ interface SelectedViewProps {
   getActiveModelLabel: () => string;
   reset: () => void;
   handleTranscribe: () => void;
+  meetingTitle: string;
+  onMeetingTitleChange: (title: string) => void;
   transcribeDisabled: boolean;
   requiresUpgrade: boolean;
   fileTooLarge: boolean;
@@ -1621,6 +1637,8 @@ function SelectedView({
   getActiveModelLabel,
   reset,
   handleTranscribe,
+  meetingTitle,
+  onMeetingTitleChange,
   transcribeDisabled,
   requiresUpgrade,
   fileTooLarge,
@@ -1636,6 +1654,8 @@ function SelectedView({
   onOpenSettings,
 }: SelectedViewProps) {
   const canTranscribe = !fileTooLarge && !requiresUpgrade && !byokTooLarge;
+  const meetingTitleId = useId();
+  const meetingTitleHintId = useId();
 
   return (
     <div className="flex flex-col gap-3" style={{ animation: "float-up 0.3s ease-out" }}>
@@ -1669,6 +1689,32 @@ function SelectedView({
         >
           <X size={14} />
         </button>
+      </div>
+
+      <div className={cn(CARD_SURFACE_CLASS, "flex flex-col gap-1.5 p-4")}>
+        <label htmlFor={meetingTitleId} className="text-sm font-medium text-foreground">
+          {t("notes.upload.meetingName")}
+        </label>
+        <input
+          dir="auto"
+          id={meetingTitleId}
+          type="text"
+          value={meetingTitle}
+          maxLength={200}
+          autoFocus
+          onChange={(event) => onMeetingTitleChange(event.target.value)}
+          onKeyDown={(event) => {
+            if (event.key !== "Enter" || event.nativeEvent.isComposing) return;
+            event.preventDefault();
+            if (canTranscribe && !transcribeDisabled) handleTranscribe();
+          }}
+          placeholder={t("notes.upload.meetingNamePlaceholder")}
+          aria-describedby={meetingTitleHintId}
+          className="input-inline h-9 w-full rounded-lg border border-border/70 bg-background px-3 text-sm text-foreground placeholder:text-muted-foreground/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/30 dark:border-white/15"
+        />
+        <p id={meetingTitleHintId} className="text-[13px] text-muted-foreground">
+          {t("notes.upload.meetingNameHint")}
+        </p>
       </div>
 
       {/* Cloud absolute limit (500 MB) */}

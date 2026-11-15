@@ -4079,7 +4079,11 @@
       "urlYoutubeBlocked": "YouTube blockiert Downloads aus Ihrem Netzwerk vorübergehend. Versuchen Sie es später erneut.",
       "customEndpointInvalid": "Benutzerdefinierter Transkriptionsendpunkt ist nicht konfiguriert oder ungültig. Aktualisieren Sie ihn in den Einstellungen.",
       "streamingOnlyProvider": "Dieser Anbieter unterstützt nur Live-Transkription. Wähle für Datei-Uploads und Wiederholungen einen anderen Anbieter.",
-      "disabledByOrg": "Das Hochladen von Audiodateien wurde von Ihrer Organisation deaktiviert."
+      "disabledByOrg": "Das Hochladen von Audiodateien wurde von Ihrer Organisation deaktiviert.",
+      "meetingName": "Name des Meetings",
+      "meetingNamePlaceholder": "z. B. Wöchentliche Betriebsbesprechung",
+      "meetingNameHint": "Leer lassen, um den Namen aus dem Gesagten abzuleiten.",
+      "meetingNameFor": "Name des Meetings für {{name}}"
     },
     "meeting": {
       "title": "Besprechungsnotizen",

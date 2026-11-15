@@ -3527,7 +3527,11 @@
       "urlYoutubeBlocked": "YouTube 暂时阻止了来自您网络的下载。请稍后重试。",
       "customEndpointInvalid": "自定义转写端点未配置或无效。请在设置中更新。",
       "streamingOnlyProvider": "该服务商仅支持实时转录。请为文件上传和重试选择其他服务商。",
-      "disabledByOrg": "您的组织已禁用音频上传。"
+      "disabledByOrg": "您的组织已禁用音频上传。",
+      "meetingName": "会议名称",
+      "meetingNamePlaceholder": "例如：每周运营例会",
+      "meetingNameHint": "留空则根据会议内容命名。",
+      "meetingNameFor": "{{name}} 的会议名称"
     },
     "meeting": {
       "title": "会议笔记",

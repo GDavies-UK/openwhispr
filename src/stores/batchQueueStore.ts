@@ -40,6 +40,9 @@ export interface QueueItem {
   tempPath?: string;
   // Stopped by org policy, showing why in `error`; the next run retries it.
   stoppedByPolicy?: boolean;
+  // Meeting name the user typed for a file. Blank: named from the file or
+  // what was said, as before.
+  title?: string;
 }
 
 export interface TranscribeOptions {
@@ -82,6 +85,7 @@ export function addFiles(files: Array<{ name: string; path: string; sizeBytes: n
     sizeBytes: f.sizeBytes,
     status: "queued" as const,
     progress: 0,
+    title: phoneRecordingTitle(f.name) ?? "",
   }));
   updateQueue((prev) => [...prev, ...items]);
   return items;
@@ -100,6 +104,17 @@ export function addUrls(urls: string[]) {
   }));
   updateQueue((prev) => [...prev, ...items]);
   return items;
+}
+
+export function setQueueItemTitle(id: string, title: string) {
+  updateQueue((prev) => prev.map((item) => (item.id === id ? { ...item, title } : item)));
+}
+
+/** The name typed for a file item, read when its note is saved (it can be edited
+ * while earlier items transcribe). Blank when none was typed. */
+export function typedQueueItemTitle(id: string): string {
+  const item = useBatchQueueStore.getState().queue.find((i) => i.id === id);
+  return item?.source === "file" ? (item.title ?? "").trim() : "";
 }
 
 export function removeQueueItem(id: string) {
@@ -289,6 +304,7 @@ export function processBatchQueue(
       let noteTitle = noteName;
       if (item.source === "file") {
         noteTitle =
+          typedQueueItemTitle(item.id) ||
           phoneRecordingTitle(noteName) ||
           (await transcribeOpts.generateTitle?.(finalText)) ||
           uploadTitleFallback(finalText, noteName);
@@ -393,6 +409,7 @@ export function useBatchQueue() {
     addFiles,
     addUrls,
     removeItem: removeQueueItem,
+    setItemTitle: setQueueItemTitle,
     cancelAll: cancelBatch,
     clearQueue: clearBatchQueue,
     processQueue: processBatchQueue,

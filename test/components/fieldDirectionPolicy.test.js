@@ -120,6 +120,7 @@ const EXPECTED_NATIVE_FIELD_DIRECTIONS = {
   "src/components/chat/SkillApprovalCard.tsx": ["auto", "auto", "auto", "auto", "auto", "auto"],
   "src/components/notes/ActionManagerDialog.tsx": ["auto", "auto"],
   "src/components/notes/AddNotesToFolderDialog.tsx": ["auto"],
+  "src/components/notes/BatchQueueView.tsx": ["auto"],
   "src/components/notes/MeetingTranscriptChat.tsx": ["ltr", "auto"],
   "src/components/notes/NoteEditor.tsx": ["auto", "auto"],
   "src/components/notes/NoteEventPicker.tsx": ["auto"],
@@ -130,7 +131,8 @@ const EXPECTED_NATIVE_FIELD_DIRECTIONS = {
   // A teamspace's name and description, edited in place in the settings header: prose in any script.
   "src/components/notes/SpaceSettingsDialog.tsx": ["auto", "auto"],
   "src/components/notes/SpacesTree.tsx": ["auto", "auto", "auto", "auto"],
-  "src/components/notes/UploadAudioView.tsx": ["ltr", "ltr", "inherit"],
+  // Meeting names typed for a loaded recording accept any script.
+  "src/components/notes/UploadAudioView.tsx": ["ltr", "ltr", "inherit", "auto"],
   "src/components/onboarding/DemoStep.tsx": ["auto"],
   "src/components/onboarding/LanguageSelectionStep.tsx": ["auto"],
   "src/components/onboarding/UseCaseStep.tsx": ["auto"],
