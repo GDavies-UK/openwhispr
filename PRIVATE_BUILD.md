@@ -174,13 +174,20 @@ Notes you typed on the phone stay on the phone. To bring them across, use the no
 
 On GitHub, open your fork → **Actions** → **Private Windows installer** → **Run workflow**.
 After about 20 minutes, the run's page has a **windows-installer** download: a zip holding
-`OpenWhispr Setup <version>.exe`. Unzip it and run it on the laptop.
+`Ding Ding-<version>-win-x64.exe`. Unzip it and run it on the laptop.
+
+A run from `main` also publishes the installer to **dingding.bus-tools.co.uk** (behind
+Cloudflare Access), where it downloads directly with no zip and no 14-day expiry. That needs
+three repository secrets — `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, from an
+R2 token with Object Read & Write on the `dingding-downloads` bucket only. Without them the
+step says so and skips; the artifact is still there. Setting up the page itself is in
+`dingding/README.md` in the bus-tools repository.
 
 - The installer isn't code-signed, so Windows shows "Windows protected your PC" the first
   time: **More info** → **Run anyway**. A work-managed laptop may block it; ask IT.
 - If **Actions** shows a notice about workflows on forks, enable them first.
-- **Run workflow** only appears once this branch is merged into the fork's default branch.
-  Until then, the workflow runs whenever its own file changes on this branch.
+- **Run workflow** only appears for workflows on the fork's default branch. On a working
+  branch, the workflow runs whenever its own file changes, and never publishes.
 
 ### Building it yourself
 
