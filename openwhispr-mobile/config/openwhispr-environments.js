@@ -1,5 +1,7 @@
-const PRODUCTION_BUNDLE_ID = 'com.gizmolabs.openwhispr';
-const DEVELOPMENT_BUNDLE_ID = 'com.gizmolabs.openwhispr.dev';
+// Private build: Ding Ding's own identifiers, registered to your Apple team on the first
+// build. The keyboard and Live Activity extensions and the App Group derive from them.
+const PRODUCTION_BUNDLE_ID = 'uk.co.bustools.dingding';
+const DEVELOPMENT_BUNDLE_ID = 'uk.co.bustools.dingding.dev';
 
 function firstNonEmpty(...values) {
   return values.find((value) => typeof value === 'string' && value.trim().length > 0)?.trim();

@@ -58,39 +58,82 @@ The switch is `PRIVATE_BUILD` in `openwhispr-mobile/src/config/privateBuild.ts`.
 
 ## Install on your iPhone
 
-You need a Mac with **Xcode 26.2 or newer** and a **paid Apple Developer account**
-($99/year). A free account can't sign the app's keyboard and Live Activity extensions.
+You need a **paid Apple Developer account** (£79/year, developer.apple.com). Apple only lets
+you install your own app on an iPhone through one, and the app's keyboard and Lock Screen
+parts need a capability a free account can't sign.
+
+The app is already set up as yours: its ID is `uk.co.bustools.dingding` (with
+`.keyboard` and `.activity` extensions and the App Group `group.uk.co.bustools.dingding`),
+and it carries none of OpenWhispr's Expo or App Store accounts.
+
+### From Windows: build in the cloud with Expo (no Mac needed)
+
+Expo's build service (EAS) compiles the app on its own Macs. Your laptop only sends it the
+project.
+
+1. Create a free account at **expo.dev**.
+2. On the laptop, install **Node 24** (nodejs.org) and **Git**, then:
+
+   ```bash
+   git clone https://github.com/GDavies-UK/openwhispr.git
+   cd openwhispr/openwhispr-mobile
+   npm install
+   npx eas-cli login
+   npx eas-cli init
+   ```
+
+   `init` creates your own Expo project and prints its project id. Because this app's
+   config is generated (`app.config.js`), it can't save the id itself: add it to
+   `app.base.json` under `expo` → `extra` → `eas` as `"projectId": "<the id>"`, next to
+   `"build"`. Commit that change so later builds use the same project.
+
+3. Build:
+
+   ```bash
+   npx eas-cli build -p ios --profile production
+   ```
+
+   Sign in with your Apple Developer account when asked and let EAS create the certificates
+   and profiles. It registers the app, the keyboard and Live Activity extensions, and the
+   App Group for you; say yes to each. The build runs on Expo's servers for about 20–30
+   minutes. The free plan allows a limited number of builds a month, which is plenty here.
+
+4. Send it to TestFlight:
+
+   ```bash
+   npx eas-cli submit -p ios --latest
+   ```
+
+   The first time, EAS creates the app in App Store Connect; give it the name Ding Ding.
+   Apple then processes the build for 10–30 minutes.
+
+5. On the iPhone, install **TestFlight** from the App Store, sign in with the same Apple ID,
+   and install Ding Ding from it. You're the app's owner, so there's no review wait.
+
+A TestFlight build works for 90 days. Repeat steps 3 and 4 for a fresh one.
+
+If a build stops with a message about a missing team for `OpenWhisprKeyboard` or
+`OpenWhisprActivity`, add your Team ID (developer.apple.com → Membership) to the
+`production` profile in `eas.json` as `"env": { "APPLE_TEAM_ID": "<your team id>" }` and
+build again.
+
+### On a Mac with Xcode
+
+With **Xcode 26.2 or newer**:
 
 ```bash
 cd openwhispr-mobile
 npm install
 cp .env.example .env.local
 bundle install
-```
-
-In `.env.local`, give the app identifiers that belong to you (any reverse-domain name):
-
-```dotenv
-OPENWHISPR_IOS_BUNDLE_IDENTIFIER=uk.co.bustools.dingding
-OPENWHISPR_SCHEME=dingding
-```
-
-Leave the Sentry, AppsFlyer, Superwall and RevenueCat keys empty. Nothing reads them any more.
-
-```bash
 npm run prebuild:dev -- --clean
 open ios/*.xcworkspace
 ```
 
 In Xcode, pick your team under _Signing & Capabilities_ for the three targets (the app,
-`OpenWhisprKeyboard` and `OpenWhisprActivity`). Then plug in the iPhone and run:
-
-```bash
-npm run ios -- --device
-```
-
-For a copy that stays installed without the Mac, archive it in Xcode
-(_Product → Archive_) and send it to TestFlight.
+`OpenWhisprKeyboard` and `OpenWhisprActivity`). Then plug in the iPhone and run
+`npm run ios -- --device`. A development build uses the `.dev` identifiers, so it can sit
+beside a TestFlight copy.
 
 ### First run
 

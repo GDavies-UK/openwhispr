@@ -7,7 +7,6 @@
     "development": {
       "developmentClient": true,
       "distribution": "internal",
-      "channel": "development",
       "ios": {
         "image": "macos-tahoe-26.5-xcode-26.6",
         "buildConfiguration": "Debug"
@@ -15,17 +14,12 @@
     },
     "preview": {
       "distribution": "internal",
-      "channel": "preview",
       "ios": {
         "image": "macos-tahoe-26.5-xcode-26.6"
       }
     },
     "production": {
       "autoIncrement": true,
-      "channel": "production",
-      "env": {
-        "BRAND_FONTS_REQUIRED": "1"
-      },
       "ios": {
         "image": "macos-tahoe-26.5-xcode-26.6",
         "resourceClass": "medium"
@@ -33,11 +27,6 @@
     }
   },
   "submit": {
-    "production": {
-      "ios": {
-        "appleTeamId": "T832773L2J",
-        "ascAppId": "6763804420"
-      }
-    }
+    "production": {}
   }
 }
