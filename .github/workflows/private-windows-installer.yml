@@ -9,6 +9,12 @@
 # time: More info → Run anyway. A managed laptop may refuse unsigned software
 # altogether; that is IT's call.
 #
+# A run from main also publishes the installer to dingding.bus-tools.co.uk:
+# it uploads windows/latest.exe, then windows/latest.json, to the R2 bucket
+# "dingding-downloads". Needs the repository secrets R2_ACCOUNT_ID,
+# R2_ACCESS_KEY_ID and R2_SECRET_ACCESS_KEY (an R2 token with Object Read &
+# Write on that bucket only); without them the step says so and skips.
+#
 # build-and-notarize.yml stays as it is: on a fork its non-PR Windows build
 # signs and fails for want of those keys. This job is the same build with the
 # unsigned config, and with no OpenWhispr cloud settings baked in, since the
@@ -111,3 +117,49 @@ jobs:
           path: dist/*.exe
           if-no-files-found: error
           retention-days: 14
+
+      # The download page offers a file only once latest.json exists and is
+      # well formed, so the installer goes up FIRST and its description LAST:
+      # a run that dies halfway leaves the previous build on offer, never a
+      # link to a half-written file.
+      - name: Publish to the Ding Ding download page
+        if: github.ref == 'refs/heads/main'
+        shell: bash
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: auto
+          # R2 does not take every checksum newer AWS CLIs add by default.
+          AWS_REQUEST_CHECKSUM_CALCULATION: when_required
+          AWS_RESPONSE_CHECKSUM_VALIDATION: when_required
+        run: |
+          set -euo pipefail
+          if [ -z "$R2_ACCOUNT_ID" ] || [ -z "$AWS_ACCESS_KEY_ID" ] || [ -z "$AWS_SECRET_ACCESS_KEY" ]; then
+            echo "::notice::R2 secrets not set; the installer is in the artifact only (see PRIVATE_BUILD.md)."
+            exit 0
+          fi
+          shopt -s nullglob
+          installers=(dist/*.exe)
+          if [ ${#installers[@]} -ne 1 ]; then
+            echo "::error::Expected one installer in dist/, found ${#installers[@]}"
+            exit 1
+          fi
+          file="${installers[0]}"
+          name="$(basename "$file")"
+          endpoint="https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com"
+          node -e '
+            const fs = require("fs"), crypto = require("crypto");
+            const [file, name, commit] = process.argv.slice(1);
+            const sha256 = crypto.createHash("sha256").update(fs.readFileSync(file)).digest("hex");
+            const info = { version: require("./package.json").version, fileName: name,
+              sizeBytes: fs.statSync(file).size, sha256,
+              builtAt: new Date().toISOString(), commit: commit.slice(0, 12) };
+            fs.writeFileSync("latest.json", JSON.stringify(info, null, 2));
+            console.log(JSON.stringify(info));
+          ' "$file" "$name" "$GITHUB_SHA"
+          aws s3 cp "$file" s3://dingding-downloads/windows/latest.exe \
+            --endpoint-url "$endpoint" --content-type application/vnd.microsoft.portable-executable --only-show-errors
+          aws s3 cp latest.json s3://dingding-downloads/windows/latest.json \
+            --endpoint-url "$endpoint" --content-type application/json --only-show-errors
+          echo "::notice::Published $name to the Ding Ding download page."
